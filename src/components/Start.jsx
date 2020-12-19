@@ -1,12 +1,18 @@
-import { Center, Box, Heading, Text, Icon } from "@chakra-ui/react";
+import { Flex, Box, Heading, Text, Icon } from "@chakra-ui/react";
 import { FiUploadCloud } from "react-icons/fi";
+import { GiParachute } from "react-icons/gi";
+import { FaRegFrownOpen } from "react-icons/fa";
 
 const sx = {
     start: {
+        flexDirection: "column",
+        alignItems: "center",
         width: "100vw",
         height: "100vh",
+        py: 10,
     },
-    box: {
+    header: {
+        my: 16,
         maxWidth: "64rem",
         textAlign: "center",
     },
@@ -15,36 +21,56 @@ const sx = {
         fontSize: "6xl",
     },
     desc: {
-        mb: 10,
         fontSize: "xl",
         fontWeight: "bold",
     },
-    icon: {
-        mb: 0.5,
-        fontSize: "6xl",
-        color: "gray.200",
+    status: {
+        mt: 16,
+        mb: "auto",
+        textAlign: "center",
     },
-    howto: {
-        fontSize: "sm",
+    icon: {
+        mb: 2,
+        fontSize: "6xl",
+    },
+    message: {
+        fontSize: "lg",
         fontWeight: "bold",
-        color: "gray.400",
     },
 };
 
-function Start() {
+function Start({ hasErrors, isDragging, numIcons, ...props }) {
     return (
-        <Center sx={sx.start}>
-            <Box sx={sx.box}>
+        <Flex sx={sx.start} {...props}>
+            <Box sx={sx.header} as="header">
                 <Heading as="h1" sx={sx.heading}>
                     SVG to Chakra Icon
                 </Heading>
                 <Text sx={sx.desc}>
                     Optimize and convert SVG icons to Chakra UI JSX
                 </Text>
-                <Icon as={FiUploadCloud} sx={sx.icon} />
-                <Text sx={sx.howto}>Drag SVG files here to get started</Text>
             </Box>
-        </Center>
+            <Box sx={sx.status}>
+                <Icon
+                    as={
+                        hasErrors
+                            ? FaRegFrownOpen
+                            : isDragging
+                            ? GiParachute
+                            : FiUploadCloud
+                    }
+                    sx={sx.icon}
+                    opacity={isDragging ? 1 : 0.4}
+                />
+                <Text sx={sx.message} opacity={isDragging ? 1 : 0.4}>
+                    {hasErrors
+                        ? "SVG only please"
+                        : isDragging
+                        ? `Drop ${numIcons === 1 ? "it" : "'em"}!`
+                        : "Drag SVG icons here"}
+                </Text>
+            </Box>
+        </Flex>
     );
 }
 
