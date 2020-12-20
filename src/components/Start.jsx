@@ -1,8 +1,20 @@
-import { Flex, Box, Heading, Text, Icon } from "@chakra-ui/react";
+import { Flex, Box, Heading, Text, Icon, keyframes } from "@chakra-ui/react";
 import { useShowtime } from "react-showtime";
 import { FiUploadCloud } from "react-icons/fi";
 import { GiParachute } from "react-icons/gi";
 import { FaRegFrownOpen } from "react-icons/fa";
+
+const swellAnimation = keyframes`
+  from {
+    transform: scale(0.8);
+  }
+  50% {
+      transform: scale(1.2);
+  }
+  to {
+    transform: scale(1.0);
+  }
+`;
 
 const sx = {
     start: {
@@ -41,7 +53,7 @@ const sx = {
     },
 };
 
-function Start({ hasErrors, isDragging, numIcons, ...props }) {
+function Start({ isDragging, numIcons = 0, isProcessing, error, ...props }) {
     const [ref] = useShowtime({
         transition: "rise",
         duration: 500,
@@ -57,10 +69,18 @@ function Start({ hasErrors, isDragging, numIcons, ...props }) {
                     Optimize and convert SVG icons to Chakra UI JSX
                 </Text>
             </Box>
-            <Box ref={ref} sx={sx.status}>
+            <Box
+                ref={ref}
+                sx={sx.status}
+                animation={
+                    error || isDragging || isProcessing
+                        ? `250ms ease 1 ${swellAnimation}`
+                        : null
+                }
+            >
                 <Icon
                     as={
-                        hasErrors
+                        error
                             ? FaRegFrownOpen
                             : isDragging
                             ? GiParachute
@@ -70,11 +90,10 @@ function Start({ hasErrors, isDragging, numIcons, ...props }) {
                     opacity={isDragging ? 1 : 0.4}
                 />
                 <Text sx={sx.message} opacity={isDragging ? 1 : 0.4}>
-                    {hasErrors
-                        ? "SVG only please"
-                        : isDragging
-                        ? `Drop ${numIcons === 1 ? "it" : "'em"}!`
-                        : "Drag SVG icons here"}
+                    {error ||
+                        (isDragging
+                            ? `Drop ${numIcons === 1 ? "it" : "'em"}!`
+                            : "Drag SVG icons here")}
                 </Text>
             </Box>
             )

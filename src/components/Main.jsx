@@ -1,13 +1,30 @@
+import { useState } from "react";
 import { Box } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
 
 import Start from "./Start";
 import Output from "./Output";
+import { readFiles } from "../readFiles";
 
 function Main() {
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [files, setFiles] = useState([]);
+
+    // TODO React Dropzone docs wrap this in useCallback with [] dep array. Necessary?
+    const onDrop = async (acceptedFiles, fileRejections) => {
+        if (fileRejections?.length) return;
+
+        setIsProcessing(true);
+        try {
+            const files = await readFiles(acceptedFiles);
+            setFiles(files);
+        } catch (e) {
+            console.error(e);
+        }
+        setIsProcessing(false);
+    };
+
     const {
-        acceptedFiles,
-        fileRejections,
         draggedFiles,
         getRootProps,
         getInputProps,
@@ -16,9 +33,10 @@ function Main() {
         isDragReject,
     } = useDropzone({
         accept: "image/svg+xml",
+        onDrop,
     });
 
-    const isDone = acceptedFiles?.length && !fileRejections?.length; // && svg optimization succeeds
+    const isDone = files?.length; // && svg optimization succeeds
 
     const getBg = () => {
         if (isDragReject) return "red.300";
@@ -34,13 +52,14 @@ function Main() {
             transition="background-color 150ms"
         >
             {isDone ? (
-                <Output files={acceptedFiles} />
+                <Output files={files} />
             ) : (
                 <>
                     <Start
-                        hasErrors={isDragReject}
                         isDragging={isDragActive}
                         numIcons={draggedFiles.length}
+                        isProcessing={isProcessing}
+                        error={isDragReject ? "SVG only please" : null}
                     />
                     <input {...getInputProps()} />
                 </>

@@ -10,7 +10,14 @@ const sx = {
 };
 
 function Output({ files }) {
-    return <Flex sx={sx.output}>Donezo</Flex>;
+    console.log(files);
+    return (
+        <Flex sx={sx.output}>
+            {files.map(({ name, preview }) => (
+                <img src={preview} key={name} alt="" width="200" />
+            ))}
+        </Flex>
+    );
 }
 
 export default Output;
