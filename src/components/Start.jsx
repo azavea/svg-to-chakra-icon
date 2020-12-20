@@ -1,4 +1,5 @@
 import { Flex, Box, Heading, Text, Icon } from "@chakra-ui/react";
+import { useShowtime } from "react-showtime";
 import { FiUploadCloud } from "react-icons/fi";
 import { GiParachute } from "react-icons/gi";
 import { FaRegFrownOpen } from "react-icons/fa";
@@ -36,10 +37,16 @@ const sx = {
     message: {
         fontSize: "lg",
         fontWeight: "bold",
+        whiteSpace: "nowrap",
     },
 };
 
 function Start({ hasErrors, isDragging, numIcons, ...props }) {
+    const [ref] = useShowtime({
+        transition: "rise",
+        duration: 500,
+        startWithTransition: true,
+    });
     return (
         <Flex sx={sx.start} {...props}>
             <Box sx={sx.header} as="header">
@@ -50,7 +57,7 @@ function Start({ hasErrors, isDragging, numIcons, ...props }) {
                     Optimize and convert SVG icons to Chakra UI JSX
                 </Text>
             </Box>
-            <Box sx={sx.status}>
+            <Box ref={ref} sx={sx.status}>
                 <Icon
                     as={
                         hasErrors
@@ -70,6 +77,7 @@ function Start({ hasErrors, isDragging, numIcons, ...props }) {
                         : "Drag SVG icons here"}
                 </Text>
             </Box>
+            )
         </Flex>
     );
 }
