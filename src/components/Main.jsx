@@ -17,7 +17,11 @@ function Main() {
         setIsProcessing(true);
         try {
             const files = await readFiles(acceptedFiles);
-            setFiles(files);
+            const unique = [
+                ...new Map(files.map(file => [file.name, file])).values(),
+            ];
+            const sorted = unique.sort((a, b) => (a.name > b.name ? 1 : -1));
+            setFiles(sorted);
         } catch (e) {
             console.error(e);
         }
