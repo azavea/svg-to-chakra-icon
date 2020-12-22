@@ -6,13 +6,13 @@ import { FaRegFrownOpen } from "react-icons/fa";
 
 const swellAnimation = keyframes`
   from {
-    transform: scale(0.8);
+      transform: scale(0.8);
   }
   50% {
       transform: scale(1.2);
   }
   to {
-    transform: scale(1.0);
+      transform: scale(1.0);
   }
 `;
 
@@ -74,7 +74,7 @@ function Start({ isDragging, numIcons = 0, isProcessing, error, ...props }) {
                 sx={sx.status}
                 animation={
                     error || isDragging || isProcessing
-                        ? `250ms ease 1 ${swellAnimation}`
+                        ? `250ms ease ${swellAnimation}`
                         : null
                 }
             >
@@ -87,16 +87,15 @@ function Start({ isDragging, numIcons = 0, isProcessing, error, ...props }) {
                             : FiUploadCloud
                     }
                     sx={sx.icon}
-                    opacity={isDragging ? 1 : 0.4}
+                    opacity={isDragging ? 0.8 : 0.4}
                 />
-                <Text sx={sx.message} opacity={isDragging ? 1 : 0.4}>
+                <Text sx={sx.message} opacity={isDragging ? 0.8 : 0.4}>
                     {error ||
                         (isDragging
                             ? `Drop ${numIcons === 1 ? "it" : "'em"}!`
                             : "Drag SVG icons here")}
                 </Text>
             </Box>
-            )
         </Flex>
     );
 }

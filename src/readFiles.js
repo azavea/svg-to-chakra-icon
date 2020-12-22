@@ -1,4 +1,5 @@
 import { pascalCase } from "change-case";
+import { optimize } from "./optimize";
 
 const readFile = file => {
     return new Promise((resolve, reject) => {
@@ -13,13 +14,13 @@ const readFile = file => {
 const processFile = async file => {
     const name = pascalCase(file.name.replace(".svg", ""));
     const preview = URL.createObjectURL(file);
-    const svgString = await readFile(file);
-    // const svgOptimized = await optimizeSvgFile(svgString);
+    const svg = await readFile(file);
+    const optimized = await optimize(svg);
     return {
         name,
         preview,
-        svgString,
-        // svgOptimized,
+        svg,
+        optimized,
     };
 };
 

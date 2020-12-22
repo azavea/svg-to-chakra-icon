@@ -10,7 +10,6 @@ const sx = {
 };
 
 function Output({ files }) {
-    console.log(files);
     return (
         <Flex sx={sx.output}>
             {files.map(({ name, preview }) => (

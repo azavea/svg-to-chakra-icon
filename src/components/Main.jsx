@@ -40,7 +40,7 @@ function Main() {
         onDrop,
     });
 
-    const isDone = files?.length; // && svg optimization succeeds
+    const isDone = files?.length; // TODO && svg optimization succeeds
 
     const getBg = () => {
         if (isDragReject) return "red.300";
