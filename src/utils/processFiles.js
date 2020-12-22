@@ -1,4 +1,6 @@
 import { pascalCase } from "change-case";
+import { parse } from "svgson";
+
 import { optimize } from "./optimize";
 
 const readFile = file => {
@@ -16,12 +18,14 @@ const processFile = async file => {
     const preview = URL.createObjectURL(file);
     const svg = await readFile(file);
     const optimized = await optimize(svg);
+    const json = await parse(optimized);
     return {
         name,
         preview,
         svg,
         optimized,
+        json,
     };
 };
 
-export const readFiles = async files => Promise.all(files.map(processFile));
+export const processFiles = async files => Promise.all(files.map(processFile));

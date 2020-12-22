@@ -18,6 +18,7 @@
     "react-icons": "^3.11.0",
     "react-scripts": "4.0.1",
     "react-showtime": "^0.2.0",
+    "svgson": "^4.1.0",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

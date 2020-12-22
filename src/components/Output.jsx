@@ -1,19 +1,87 @@
-import { Flex } from "@chakra-ui/react";
+import {
+    Flex,
+    Heading,
+    Button,
+    IconButton,
+    Icon,
+    useClipboard,
+} from "@chakra-ui/react";
+import { MdClose } from "react-icons/md";
+import { FaCopy } from "react-icons/fa";
+
+import OutputItem from "./OutputItem";
+import { generateAggregateCreateIconCode } from "../utils/chakra";
 
 const sx = {
     output: {
         flexDirection: "column",
-        alignItems: "center",
         width: "100vw",
         minHeight: "100vh",
+        p: 4,
+    },
+    header: {
+        alignItems: "center",
+        mb: 2,
+    },
+    heading: {
+        fontSize: "2.8rem",
+        fontWeight: "normal",
+        lineHeight: 1,
+    },
+    reset: {
+        ml: 1.5,
+        p: 1,
+        height: "auto",
+        bg: "none",
+        fontSize: "2.4rem",
+        opacity: 0.8,
+        ":hover": {
+            opacity: 1,
+        },
+    },
+    copy: {
+        ml: "auto",
+        p: 2,
+        height: "auto",
+        fontSize: "1.6rem",
+        opacity: 0.8,
+        ":hover": {
+            opacity: 1,
+        },
+    },
+    icon: {
+        mr: 2,
+        fontSize: "2.4rem",
     },
 };
 
-function Output({ files }) {
+function Output({ files, onReset }) {
+    const code = generateAggregateCreateIconCode(files);
+    const { onCopy } = useClipboard(code);
+
     return (
         <Flex sx={sx.output}>
-            {files.map(({ name, preview }) => (
-                <img src={preview} key={name} alt="" width="200" />
+            <Flex sx={sx.header}>
+                <Heading as="h1" sx={sx.heading}>{`${files.length} icon${
+                    files.length === 1 ? "" : "s"
+                } formatted for Chakra UI`}</Heading>
+                <IconButton
+                    onClick={onReset}
+                    sx={sx.reset}
+                    isRound
+                    icon={<MdClose />}
+                />
+                <Button
+                    sx={sx.copy}
+                    onClick={onCopy}
+                    aria-label="Copy source code"
+                >
+                    <Icon sx={sx.icon} as={FaCopy} /> Copy all
+                </Button>
+            </Flex>
+            <OutputItem mb={0.5} />
+            {files.map(file => (
+                <OutputItem file={file} key={file.name} mb={0.5} />
             ))}
         </Flex>
     );

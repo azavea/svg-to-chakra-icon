@@ -4,11 +4,12 @@ import { useDropzone } from "react-dropzone";
 
 import Start from "./Start";
 import Output from "./Output";
-import { readFiles } from "../readFiles";
+import { processFiles } from "../utils/processFiles";
 
 function Main() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [files, setFiles] = useState([]);
+    const isDone = files?.length > 0;
 
     // TODO React Dropzone docs wrap this in useCallback with [] dep array. Necessary?
     const onDrop = async (acceptedFiles, fileRejections) => {
@@ -16,7 +17,7 @@ function Main() {
 
         setIsProcessing(true);
         try {
-            const files = await readFiles(acceptedFiles);
+            const files = await processFiles(acceptedFiles);
             const unique = [
                 ...new Map(files.map(file => [file.name, file])).values(),
             ];
@@ -40,8 +41,6 @@ function Main() {
         onDrop,
     });
 
-    const isDone = files?.length; // TODO && svg optimization succeeds
-
     const getBg = () => {
         if (isDragReject) return "red.300";
         if (isDragActive) return "green.300";
@@ -56,7 +55,7 @@ function Main() {
             transition="background-color 150ms"
         >
             {isDone ? (
-                <Output files={files} />
+                <Output files={files} onReset={() => setFiles([])} />
             ) : (
                 <>
                     <Start
