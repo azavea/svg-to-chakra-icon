@@ -1,20 +1,10 @@
-import { Flex, Box, Heading, Text, Icon, keyframes } from "@chakra-ui/react";
+import { Flex, Box, Heading, Text, Icon } from "@chakra-ui/react";
 import { useShowtime } from "react-showtime";
 import { FiUploadCloud } from "react-icons/fi";
 import { GiParachute } from "react-icons/gi";
 import { FaRegFrownOpen } from "react-icons/fa";
 
-const swellAnimation = keyframes`
-  from {
-      transform: scale(0.8);
-  }
-  50% {
-      transform: scale(1.2);
-  }
-  to {
-      transform: scale(1.0);
-  }
-`;
+import { pulseAnimation } from "../constants";
 
 const sx = {
     start: {
@@ -73,9 +63,7 @@ function Start({ isDragging, numIcons = 0, isProcessing, error, ...props }) {
                 ref={ref}
                 sx={sx.status}
                 animation={
-                    error || isDragging || isProcessing
-                        ? `250ms ease ${swellAnimation}`
-                        : null
+                    error || isDragging || isProcessing ? pulseAnimation : null
                 }
             >
                 <Icon

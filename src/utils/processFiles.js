@@ -15,13 +15,11 @@ const readFile = file => {
 
 const processFile = async file => {
     const name = pascalCase(file.name.replace(".svg", ""));
-    const preview = URL.createObjectURL(file);
     const svg = await readFile(file);
     const optimized = await optimize(svg);
     const json = await parse(optimized);
     return {
         name,
-        preview,
         svg,
         optimized,
         json,

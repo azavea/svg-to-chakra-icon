@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
     Flex,
     Heading,
@@ -59,6 +60,25 @@ function Output({ files, onReset }) {
     const code = generateAggregateCreateIconCode(files);
     const { onCopy } = useClipboard(code);
 
+    const [shouldHighlight, setShouldHighlight] = useState(false);
+    const [shouldPulse, setShouldPulse] = useState(false);
+
+    const handleClick = () => {
+        onCopy();
+        setShouldPulse(true);
+        setTimeout(() => setShouldPulse(false), 300);
+    };
+
+    const handleFocus = () => {
+        setShouldPulse(false);
+        setShouldHighlight(true);
+    };
+
+    const handleBlur = () => {
+        setShouldPulse(false);
+        setShouldHighlight(false);
+    };
+
     return (
         <Flex sx={sx.output}>
             <Flex sx={sx.header}>
@@ -73,15 +93,29 @@ function Output({ files, onReset }) {
                 />
                 <Button
                     sx={sx.copy}
-                    onClick={onCopy}
+                    onClick={handleClick}
+                    onMouseEnter={handleFocus}
+                    onFocus={handleFocus}
+                    onMouseLeave={handleBlur}
+                    onBlur={handleBlur}
                     aria-label="Copy source code"
                 >
                     <Icon sx={sx.icon} as={FaCopy} /> Copy all
                 </Button>
             </Flex>
-            <OutputItem mb={0.5} />
+            <OutputItem
+                highlight={shouldHighlight}
+                pulse={shouldPulse}
+                mb={0.5}
+            />
             {files.map(file => (
-                <OutputItem file={file} key={file.name} mb={0.5} />
+                <OutputItem
+                    file={file}
+                    key={file.name}
+                    highlight={shouldHighlight}
+                    pulse={shouldPulse}
+                    mb={0.5}
+                />
             ))}
         </Flex>
     );
