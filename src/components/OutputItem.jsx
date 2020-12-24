@@ -1,14 +1,8 @@
-import { useState } from "react";
-import {
-    Flex,
-    Box,
-    Center,
-    IconButton,
-    Icon,
-    useClipboard,
-} from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import { Flex, Box, Center, IconButton, Icon } from "@chakra-ui/react";
 import { FaCopy } from "react-icons/fa";
 
+import useClipboard from "../utils/useClipboard";
 import { generateCreateIconCode } from "../utils/chakra";
 import { pulseAnimation } from "../constants";
 
@@ -71,7 +65,7 @@ function OutputItem({ file = {}, highlight, pulse, ...props }) {
     const code = json
         ? generateCreateIconCode(name, json)
         : 'import { createIcon } from "@chakra-ui/icons";';
-    const { onCopy } = useClipboard(code);
+    const { onCopy, hasCopied } = useClipboard(code);
 
     const [shouldHighlight, setShouldHighlight] = useState(false);
     const [shouldPulse, setShouldPulse] = useState(false);
@@ -79,10 +73,13 @@ function OutputItem({ file = {}, highlight, pulse, ...props }) {
     const doHighlight = highlight || shouldHighlight;
     const doPulse = pulse || shouldPulse;
 
+    useEffect(() => {
+        !hasCopied && setShouldPulse(false);
+    }, [hasCopied]);
+
     const handleClick = () => {
         onCopy();
         setShouldPulse(true);
-        setTimeout(() => setShouldPulse(false), 300);
     };
 
     const handleFocus = () => {

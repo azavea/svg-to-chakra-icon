@@ -1,16 +1,10 @@
-import { useState } from "react";
-import {
-    Flex,
-    Heading,
-    Button,
-    IconButton,
-    Icon,
-    useClipboard,
-} from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import { Flex, Heading, Button, IconButton, Icon } from "@chakra-ui/react";
 import { MdClose } from "react-icons/md";
 import { FaCopy } from "react-icons/fa";
 
 import OutputItem from "./OutputItem";
+import useClipboard from "../utils/useClipboard";
 import { generateAggregateCreateIconCode } from "../utils/chakra";
 
 const sx = {
@@ -58,15 +52,18 @@ const sx = {
 
 function Output({ files, onReset }) {
     const code = generateAggregateCreateIconCode(files);
-    const { onCopy } = useClipboard(code);
+    const { onCopy, hasCopied } = useClipboard(code);
 
     const [shouldHighlight, setShouldHighlight] = useState(false);
     const [shouldPulse, setShouldPulse] = useState(false);
 
+    useEffect(() => {
+        !hasCopied && setShouldPulse(false);
+    }, [hasCopied]);
+
     const handleClick = () => {
         onCopy();
         setShouldPulse(true);
-        setTimeout(() => setShouldPulse(false), 300);
     };
 
     const handleFocus = () => {
