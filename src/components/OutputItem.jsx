@@ -3,7 +3,7 @@ import { Flex, Box, Center, IconButton, Icon } from "@chakra-ui/react";
 import { FaCopy } from "react-icons/fa";
 
 import useClipboard from "../utils/useClipboard";
-import { generateCreateIconCode } from "../utils/chakra";
+import { composeCreateIconCode } from "../utils/chakra";
 import { pulseAnimation } from "../constants";
 
 const sx = {
@@ -63,7 +63,7 @@ const sx = {
 function OutputItem({ file = {}, highlight, pulse, ...props }) {
     const { name, json, optimized } = file;
     const code = json
-        ? generateCreateIconCode(name, json)
+        ? composeCreateIconCode(name, json)
         : 'import { createIcon } from "@chakra-ui/icons";';
     const { onCopy, hasCopied } = useClipboard(code);
 
