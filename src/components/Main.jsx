@@ -1,10 +1,21 @@
 import { useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
 
 import Start from "./Start";
 import Output from "./Output";
+import Footer from "./Footer";
 import { processFiles } from "../utils/processFiles";
+
+const sx = {
+    main: {
+        minHeight: "100vh",
+        direction: "column",
+    },
+    footer: {
+        mt: "auto",
+    },
+};
 
 function Main() {
     const [isProcessing, setIsProcessing] = useState(false);
@@ -49,7 +60,8 @@ function Main() {
     };
 
     return (
-        <Box
+        <Flex
+            {...sx.main}
             bg={getBg()}
             {...getRootProps()}
             transition="background-color 150ms"
@@ -67,7 +79,8 @@ function Main() {
                     <input {...getInputProps()} />
                 </>
             )}
-        </Box>
+            <Footer {...sx.footer} />
+        </Flex>
     );
 }
 

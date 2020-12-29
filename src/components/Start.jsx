@@ -11,7 +11,6 @@ const sx = {
         direction: "column",
         align: "center",
         width: "100vw",
-        height: "100vh",
         py: 10,
     },
     header: {

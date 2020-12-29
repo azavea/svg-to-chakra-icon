@@ -11,7 +11,6 @@ const sx = {
     output: {
         direction: "column",
         width: "100vw",
-        minHeight: "100vh",
         p: 4,
     },
     header: {
