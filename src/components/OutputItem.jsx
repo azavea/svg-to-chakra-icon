@@ -21,8 +21,7 @@ const sx = {
         bg: "#FFFFFFAA",
     },
     icon: {
-        width: "8rem",
-        height: "8rem",
+        fontSize: "8rem",
         opacity: 0.3,
     },
     iconHighlight: {

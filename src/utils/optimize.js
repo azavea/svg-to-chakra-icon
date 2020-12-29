@@ -38,9 +38,12 @@ const {
     removeXMLProcInst,
     sortDefsChildren,
     // NON-DEFAULTS
+    addAttributesToSVGElement,
     removeAttrs,
     removeDimensions,
+    removeRasterImages,
     removeXMLNS,
+    sortAttrs,
 } = ALL_PLUGINS;
 
 const plugins = [
@@ -80,13 +83,30 @@ const plugins = [
     sortDefsChildren,
     collapseGroups, // moved near end bc groups need some cleaning to be eligible for collapsing
     // NON-DEFAULTS...
-    { ...removeXMLNS, active: true },
-    { ...removeDimensions, active: true },
     {
         ...removeAttrs,
         active: true,
         params: { attrs: "(stroke|fill|class|data.*)" },
     },
+    { ...removeDimensions, active: true },
+    { ...removeRasterImages, active: true },
+    { ...removeXMLNS, active: true },
+    {
+        ...addAttributesToSVGElement,
+        active: true,
+        params: {
+            attributes: [
+                {
+                    focusable: false,
+                    "aria-hidden": true,
+                    role: "presentation",
+                    width: "1em",
+                    height: "1em",
+                },
+            ],
+        },
+    },
+    { ...sortAttrs, active: true },
 ];
 
 const svgo = new SVGO({ plugins });

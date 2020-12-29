@@ -35,7 +35,7 @@ export const composeCreateIconCode = (name, json) => {
     return (
         `export const ${name} = createIcon({\n` +
         `  displayName: "${name}",\n` +
-        `  viewBox: "${viewBox}",\n` +
+        (viewBox ? `  viewBox: "${viewBox}",\n` : "") +
         paths +
         `});`
     );
