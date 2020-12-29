@@ -9,7 +9,6 @@ import { pulseAnimation } from "../constants";
 const sx = {
     outputItem: {
         position: "relative",
-        alignItems: "stretch",
         bg: "white",
     },
     outputItemHighlight: {
@@ -93,33 +92,27 @@ function OutputItem({ file = {}, highlight, pulse, ...props }) {
 
     return (
         <Flex
-            sx={{
-                ...sx.outputItem,
-                ...(doHighlight ? sx.outputItemHighlight : {}),
-            }}
+            {...sx.outputItem}
+            {...(doHighlight ? sx.outputItemHighlight : {})}
             {...props}
         >
-            <Center sx={sx.preview}>
+            <Center {...sx.preview}>
                 {optimized && (
                     <Box
                         dangerouslySetInnerHTML={{ __html: optimized }}
-                        sx={{
-                            ...sx.icon,
-                            ...(doHighlight ? sx.iconHighlight : {}),
-                        }}
                         title={name}
+                        {...sx.icon}
+                        {...(doHighlight ? sx.iconHighlight : {})}
                         animation={doPulse ? pulseAnimation : null}
                     />
                 )}
             </Center>
-            <Box sx={sx.code}>
+            <Box {...sx.code}>
                 <pre>{code}</pre>
             </Box>
             <IconButton
-                sx={{
-                    ...sx.copy,
-                    ...(doHighlight ? sx.copyHighlight : {}),
-                }}
+                {...sx.copy}
+                {...(doHighlight ? sx.copyHighlight : {})}
                 icon={<Icon as={FaCopy} />}
                 size="lg"
                 aria-label="Copy source code"

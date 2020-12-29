@@ -9,13 +9,13 @@ import { composeAggregateCreateIconCode } from "../utils/chakra";
 
 const sx = {
     output: {
-        flexDirection: "column",
+        direction: "column",
         width: "100vw",
         minHeight: "100vh",
         p: 4,
     },
     header: {
-        alignItems: "center",
+        align: "center",
         mb: 2,
     },
     heading: {
@@ -50,7 +50,7 @@ const sx = {
     },
 };
 
-function Output({ files, onReset }) {
+function Output({ files, onReset, ...props }) {
     const code = composeAggregateCreateIconCode(files);
     const { onCopy, hasCopied } = useClipboard(code);
 
@@ -77,19 +77,19 @@ function Output({ files, onReset }) {
     };
 
     return (
-        <Flex sx={sx.output}>
-            <Flex sx={sx.header}>
-                <Heading as="h1" sx={sx.heading}>{`${files.length} icon${
+        <Flex {...sx.output} {...props}>
+            <Flex {...sx.header}>
+                <Heading as="h1" {...sx.heading}>{`${files.length} icon${
                     files.length === 1 ? "" : "s"
                 } formatted for Chakra UI`}</Heading>
                 <IconButton
                     onClick={onReset}
-                    sx={sx.reset}
+                    {...sx.reset}
                     isRound
                     icon={<MdClose />}
                 />
                 <Button
-                    sx={sx.copy}
+                    {...sx.copy}
                     onClick={handleClick}
                     onMouseEnter={handleFocus}
                     onFocus={handleFocus}
@@ -97,7 +97,7 @@ function Output({ files, onReset }) {
                     onBlur={handleBlur}
                     aria-label="Copy source code"
                 >
-                    <Icon sx={sx.icon} as={FaCopy} /> Copy all
+                    <Icon {...sx.icon} as={FaCopy} /> Copy all
                 </Button>
             </Flex>
             <OutputItem

@@ -8,8 +8,8 @@ import { pulseAnimation } from "../constants";
 
 const sx = {
     start: {
-        flexDirection: "column",
-        alignItems: "center",
+        direction: "column",
+        align: "center",
         width: "100vw",
         height: "100vh",
         py: 10,
@@ -50,18 +50,18 @@ function Start({ isDragging, numIcons = 0, isProcessing, error, ...props }) {
         startWithTransition: true,
     });
     return (
-        <Flex sx={sx.start} {...props}>
-            <Box sx={sx.header} as="header">
-                <Heading as="h1" sx={sx.heading}>
+        <Flex {...sx.start} {...props}>
+            <Box {...sx.header} as="header">
+                <Heading as="h1" {...sx.heading}>
                     SVG to Chakra Icon
                 </Heading>
-                <Text sx={sx.desc}>
+                <Text {...sx.desc}>
                     Optimize and convert SVG icons to Chakra UI JSX
                 </Text>
             </Box>
             <Box
                 ref={ref}
-                sx={sx.status}
+                {...sx.status}
                 animation={
                     error || isDragging || isProcessing ? pulseAnimation : null
                 }
@@ -74,10 +74,10 @@ function Start({ isDragging, numIcons = 0, isProcessing, error, ...props }) {
                             ? GiParachute
                             : FiUploadCloud
                     }
-                    sx={sx.icon}
+                    {...sx.icon}
                     opacity={isDragging ? 0.8 : 0.4}
                 />
-                <Text sx={sx.message} opacity={isDragging ? 0.8 : 0.4}>
+                <Text {...sx.message} opacity={isDragging ? 0.8 : 0.4}>
                     {error ||
                         (isDragging
                             ? `Drop ${numIcons === 1 ? "it" : "'em"}!`
