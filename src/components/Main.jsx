@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 import { Flex } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
 
@@ -20,6 +20,7 @@ const sx = {
 function Main() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [files, setFiles] = useState([]);
+    const [error, setError] = useState();
     const isDone = files?.length > 0;
 
     // TODO React Dropzone docs wrap this in useCallback with [] dep array. Necessary?
@@ -35,6 +36,7 @@ function Main() {
             const sorted = unique.sort((a, b) => (a.name > b.name ? 1 : -1));
             setFiles(sorted);
         } catch (e) {
+            setError("Something went wrong. See console.");
             console.error(e);
         }
         setIsProcessing(false);
@@ -52,10 +54,14 @@ function Main() {
         onDrop,
     });
 
+    useLayoutEffect(() => {
+        setError(isDragReject ? "SVG only please" : null);
+    }, [isDragReject, isDragActive, isDragAccept]);
+
     const getBg = () => {
-        if (isDragReject) return "red.300";
+        if (error) return "red.300";
         if (isDragActive) return "green.300";
-        if (isDragAccept || isDone) return "#38B2AC";
+        if (isDragAccept || isProcessing || isDone) return "#38B2AC";
         return "yellow.300";
     };
 
@@ -72,9 +78,9 @@ function Main() {
                 <>
                     <Start
                         isDragging={isDragActive}
+                        isProcessing={isDragAccept || isProcessing}
                         numIcons={draggedFiles.length}
-                        isProcessing={isProcessing}
-                        error={isDragReject ? "SVG only please" : null}
+                        error={error}
                     />
                     <input {...getInputProps()} />
                 </>

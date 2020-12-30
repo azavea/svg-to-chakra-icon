@@ -42,7 +42,7 @@ const sx = {
     },
 };
 
-function Start({ isDragging, numIcons = 0, isProcessing, error, ...props }) {
+function Start({ isDragging, isProcessing, numIcons = 0, error, ...props }) {
     const [ref] = useShowtime({
         transition: "rise",
         duration: 500,
@@ -69,17 +69,19 @@ function Start({ isDragging, numIcons = 0, isProcessing, error, ...props }) {
                     as={
                         error
                             ? FaRegFrownOpen
-                            : isDragging
+                            : isDragging || isProcessing
                             ? GiParachute
                             : FiUploadCloud
                     }
                     {...sx.icon}
-                    opacity={isDragging ? 0.8 : 0.4}
+                    opacity={isDragging ? 0.8 : isProcessing ? 0 : 0.4}
                 />
                 <Text {...sx.message} opacity={isDragging ? 0.8 : 0.4}>
                     {error ||
                         (isDragging
                             ? `Drop ${numIcons === 1 ? "it" : "'em"}!`
+                            : isProcessing
+                            ? ""
                             : "Drag SVG icons here")}
                 </Text>
             </Box>
