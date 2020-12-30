@@ -21,14 +21,40 @@ const sx = {
         textAlign: "center",
         whiteSpace: "nowrap",
     },
+    append: {
+        mt: 1,
+        fontSize: "xs",
+        fontWeight: "bold",
+        textAlign: "center",
+        whiteSpace: "nowrap",
+        opacity: 0.6,
+    },
 };
 
-function Status({ isDragging, isProcessing, numIcons = 0, error, ...props }) {
+function Status({
+    isDragging,
+    isProcessing,
+    canAppend,
+    numIcons = 0,
+    error,
+    ...props
+}) {
     const [ref] = useShowtime({
         transition: "rise",
         duration: 500,
         startWithTransition: true,
     });
+
+    const composeMessage = () => {
+        if (error) return error;
+        if (isDragging) {
+            if (canAppend) return "Drop to append";
+            return `Drop ${numIcons === 1 ? "it" : "'em"}!`;
+        }
+        if (isProcessing) return "";
+        return "Drag SVG icons here";
+    };
+
     return (
         <Flex
             ref={ref}
@@ -50,13 +76,11 @@ function Status({ isDragging, isProcessing, numIcons = 0, error, ...props }) {
                 opacity={isDragging ? 0.8 : isProcessing ? 0 : 0.4}
             />
             <Text {...sx.message} opacity={isDragging ? 0.8 : 0.4}>
-                {error ||
-                    (isDragging
-                        ? `Drop ${numIcons === 1 ? "it" : "'em"}!`
-                        : isProcessing
-                        ? ""
-                        : "Drag SVG icons here")}
+                {composeMessage()}
             </Text>
+            {canAppend && isDragging && (
+                <Text {...sx.append}>Hold SHIFT to replace</Text>
+            )}
         </Flex>
     );
 }

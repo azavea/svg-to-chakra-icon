@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, useCallback } from "react";
 import { Flex, Grid } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
 
@@ -34,24 +34,36 @@ function Main() {
     const [error, setError] = useState();
     const isDone = files?.length > 0;
 
-    // TODO React Dropzone docs wrap this in useCallback with [] dep array. Necessary?
-    const onDrop = async (acceptedFiles, fileRejections) => {
-        if (fileRejections?.length) return;
+    const onDrop = useCallback(
+        async (acceptedFiles, fileRejections, { shiftKey }) => {
+            if (fileRejections?.length) return;
 
-        setIsProcessing(true);
-        try {
-            const files = await processFiles(acceptedFiles);
-            const unique = [
-                ...new Map(files.map(file => [file.name, file])).values(),
-            ];
-            const sorted = unique.sort((a, b) => (a.name > b.name ? 1 : -1));
-            setFiles(sorted);
-        } catch (e) {
-            setError("Something went wrong. See console.");
-            console.error(e);
-        }
-        setIsProcessing(false);
-    };
+            setIsProcessing(true);
+            try {
+                const droppedFiles = await processFiles(acceptedFiles);
+
+                const replace = isDone && shiftKey;
+                const newFiles = replace
+                    ? droppedFiles
+                    : [...files, ...droppedFiles];
+
+                const unique = [
+                    ...new Map(
+                        newFiles.map(file => [file.name, file])
+                    ).values(),
+                ];
+                const sorted = unique.sort((a, b) =>
+                    a.name > b.name ? 1 : -1
+                );
+                setFiles(sorted);
+            } catch (e) {
+                setError("Something went wrong. See console.");
+                console.error(e);
+            }
+            setIsProcessing(false);
+        },
+        [files, isDone]
+    );
 
     const {
         draggedFiles,
@@ -67,7 +79,7 @@ function Main() {
 
     useLayoutEffect(() => {
         setError(isDragReject ? "SVG only please" : null);
-    }, [isDragReject, isDragActive, isDragAccept]);
+    }, [isDragReject]);
 
     const getStatusColor = (translucent = false) => {
         const color = error
@@ -85,6 +97,7 @@ function Main() {
         <Status
             isDragging={isDragActive}
             isProcessing={isDragAccept || isProcessing}
+            canAppend={isDone}
             numIcons={draggedFiles.length}
             error={error}
         />
@@ -94,8 +107,8 @@ function Main() {
         <Flex
             {...sx.main}
             bg={getStatusColor()}
-            {...getRootProps()}
             transition="background-color 150ms"
+            {...getRootProps()}
         >
             {isDone ? (
                 <>
