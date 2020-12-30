@@ -1,8 +1,9 @@
 import { useState, useLayoutEffect } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Grid } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
 
 import Start from "./Start";
+import Status from "./Status";
 import Output from "./Output";
 import Footer from "./Footer";
 import { processFiles } from "../utils/processFiles";
@@ -11,6 +12,16 @@ const sx = {
     main: {
         minHeight: "100vh",
         direction: "column",
+    },
+    status: {
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        placeItems: "center",
+        bg: "#00000044",
+        pointerEvents: "none",
     },
     footer: {
         mt: "auto",
@@ -58,30 +69,46 @@ function Main() {
         setError(isDragReject ? "SVG only please" : null);
     }, [isDragReject, isDragActive, isDragAccept]);
 
-    const getBg = () => {
-        if (error) return "red.300";
-        if (isDragActive) return "green.300";
-        if (isDragAccept || isProcessing || isDone) return "#38B2AC";
-        return "yellow.300";
+    const getStatusColor = (translucent = false) => {
+        const color = error
+            ? "#FC8181"
+            : isDragActive
+            ? "#68D391"
+            : isDragAccept || isProcessing || isDone
+            ? "#38B2AC"
+            : "#F6E05E";
+        const opacity = translucent ? "EE" : "FF";
+        return `${color}${opacity}`;
     };
+
+    const status = (
+        <Status
+            isDragging={isDragActive}
+            isProcessing={isDragAccept || isProcessing}
+            numIcons={draggedFiles.length}
+            error={error}
+        />
+    );
 
     return (
         <Flex
             {...sx.main}
-            bg={getBg()}
+            bg={getStatusColor()}
             {...getRootProps()}
             transition="background-color 150ms"
         >
             {isDone ? (
-                <Output files={files} onReset={() => setFiles([])} />
+                <>
+                    <Output files={files} onReset={() => setFiles([])} />
+                    {(isDragActive || isDragAccept || isProcessing) && (
+                        <Grid {...sx.status} bg={getStatusColor(true)}>
+                            {status}
+                        </Grid>
+                    )}
+                </>
             ) : (
                 <>
-                    <Start
-                        isDragging={isDragActive}
-                        isProcessing={isDragAccept || isProcessing}
-                        numIcons={draggedFiles.length}
-                        error={error}
-                    />
+                    <Start>{status}</Start>
                     <input {...getInputProps()} />
                 </>
             )}

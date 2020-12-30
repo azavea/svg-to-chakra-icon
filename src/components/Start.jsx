@@ -1,10 +1,4 @@
-import { Flex, Box, Heading, Text, Icon } from "@chakra-ui/react";
-import { useShowtime } from "react-showtime";
-import { FiUploadCloud } from "react-icons/fi";
-import { GiParachute } from "react-icons/gi";
-import { FaRegFrownOpen } from "react-icons/fa";
-
-import { pulseAnimation } from "../constants";
+import { Flex, Box, Heading, Text } from "@chakra-ui/react";
 
 const sx = {
     start: {
@@ -23,31 +17,13 @@ const sx = {
         fontSize: "6xl",
     },
     desc: {
+        mb: 8,
         fontSize: "xl",
         fontWeight: "bold",
     },
-    status: {
-        mt: 16,
-        mb: "auto",
-        textAlign: "center",
-    },
-    icon: {
-        mb: 2,
-        fontSize: "6xl",
-    },
-    message: {
-        fontSize: "lg",
-        fontWeight: "bold",
-        whiteSpace: "nowrap",
-    },
 };
 
-function Start({ isDragging, isProcessing, numIcons = 0, error, ...props }) {
-    const [ref] = useShowtime({
-        transition: "rise",
-        duration: 500,
-        startWithTransition: true,
-    });
+function Start({ children, ...props }) {
     return (
         <Flex {...sx.start} {...props}>
             <Box {...sx.header} as="header">
@@ -58,33 +34,7 @@ function Start({ isDragging, isProcessing, numIcons = 0, error, ...props }) {
                     Optimize and convert SVG icons to Chakra UI JSX
                 </Text>
             </Box>
-            <Box
-                ref={ref}
-                {...sx.status}
-                animation={
-                    error || isDragging || isProcessing ? pulseAnimation : null
-                }
-            >
-                <Icon
-                    as={
-                        error
-                            ? FaRegFrownOpen
-                            : isDragging || isProcessing
-                            ? GiParachute
-                            : FiUploadCloud
-                    }
-                    {...sx.icon}
-                    opacity={isDragging ? 0.8 : isProcessing ? 0 : 0.4}
-                />
-                <Text {...sx.message} opacity={isDragging ? 0.8 : 0.4}>
-                    {error ||
-                        (isDragging
-                            ? `Drop ${numIcons === 1 ? "it" : "'em"}!`
-                            : isProcessing
-                            ? ""
-                            : "Drag SVG icons here")}
-                </Text>
-            </Box>
+            {children}
         </Flex>
     );
 }
