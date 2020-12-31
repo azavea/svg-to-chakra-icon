@@ -5,7 +5,7 @@ import { FaCopy } from "react-icons/fa";
 
 import OutputItem from "./OutputItem";
 import useClipboard from "../utils/useClipboard";
-import { composeAggregateCreateIconCode } from "../utils/chakra";
+import { importString, composeAggregateCreateIconCode } from "../utils/chakra";
 
 const sx = {
     output: {
@@ -50,7 +50,9 @@ const sx = {
 };
 
 function Output({ files, onReset, ...props }) {
-    const code = composeAggregateCreateIconCode(files);
+    const [includeImport, setIncludeImport] = useState(true);
+
+    const code = composeAggregateCreateIconCode(files, includeImport);
     const { onCopy, hasCopied } = useClipboard(code);
 
     const [shouldHighlight, setShouldHighlight] = useState(false);
@@ -103,7 +105,11 @@ function Output({ files, onReset, ...props }) {
                 highlight={shouldHighlight}
                 pulse={shouldPulse}
                 mb={0.5}
-            />
+                disabled={!includeImport}
+                onToggle={setIncludeImport}
+            >
+                {importString}
+            </OutputItem>
             {files.map(file => (
                 <OutputItem
                     file={file}

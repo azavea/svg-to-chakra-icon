@@ -1,3 +1,5 @@
+export const importString = 'import { createIcon } from "@chakra-ui/icons";';
+
 const composePaths = (pathNodes = []) => {
     if (pathNodes.length === 0) {
         return "";
@@ -41,9 +43,8 @@ export const composeCreateIconCode = (name, json) => {
     );
 };
 
-export const composeAggregateCreateIconCode = files =>
-    files.reduce(
-        (acc, { name, json }) =>
-            acc + "\n\n" + composeCreateIconCode(name, json),
-        'import { createIcon } from "@chakra-ui/icons";'
-    );
+export const composeAggregateCreateIconCode = (files, includeImport) =>
+    [
+        ...(includeImport ? [importString] : []),
+        ...files.map(({ name, json }) => composeCreateIconCode(name, json)),
+    ].join("\n\n");
