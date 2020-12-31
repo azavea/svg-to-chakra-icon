@@ -35,6 +35,7 @@ function Status({
     isDragging,
     isProcessing,
     canAppend,
+    shouldAppend,
     numIcons = 0,
     error,
     ...props
@@ -48,20 +49,23 @@ function Status({
     const composeMessage = () => {
         if (error) return error;
         if (isDragging) {
-            if (canAppend) return "Drop to append";
+            if (canAppend) {
+                if (shouldAppend) return "Drop to append";
+                return "Drop to replace all icons";
+            }
             return `Drop ${numIcons === 1 ? "it" : "'em"}!`;
         }
         if (isProcessing) return "";
         return "Drag SVG icons here";
     };
 
+    const shouldPulse = error || isDragging || isProcessing;
+
     return (
         <Flex
             ref={ref}
             {...sx.status}
-            animation={
-                error || isDragging || isProcessing ? pulseAnimation : null
-            }
+            animation={shouldPulse ? pulseAnimation : null}
             {...props}
         >
             <Icon
@@ -79,7 +83,11 @@ function Status({
                 {composeMessage()}
             </Text>
             {canAppend && isDragging && (
-                <Text {...sx.append}>Hold SHIFT to replace</Text>
+                <Text {...sx.append}>
+                    {shouldAppend
+                        ? "Hold SHIFT to replace"
+                        : "Release SHIFT to append"}
+                </Text>
             )}
         </Flex>
     );
