@@ -1,12 +1,12 @@
 import { Grid, Link, Image } from "@chakra-ui/react";
 
-import logo from "../img/azavea-white.svg";
+import logo from "../img/azavea-black.svg";
 
 const sx = {
     footer: {
         placeItems: "center",
         py: "4rem",
-        opacity: 0.6,
+        opacity: 0.2,
     },
 };
 
