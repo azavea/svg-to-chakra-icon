@@ -1,13 +1,18 @@
-export const importString = 'import { createIcon } from "@chakra-ui/icons";';
+const importString = 'import { createIcon } from "@chakra-ui/icons"';
 
-const composePaths = (pathNodes = []) => {
+export const getImportString = semicolons =>
+    `${importString}${semicolons ? ";" : ""}`;
+
+const composePaths = (pathNodes = [], commas) => {
     if (pathNodes.length === 0) {
         return "";
     }
 
+    const comma = commas ? "," : "";
+
     // Single path
     if (pathNodes.length === 1) {
-        return `  d: "${pathNodes[0].attributes.d}",\n`;
+        return `  d: "${pathNodes[0].attributes.d}"${comma}\n`;
     }
 
     // Multiple paths...
@@ -26,25 +31,27 @@ const composePaths = (pathNodes = []) => {
         );
     }, "");
 
-    return `  path: (\n    <>\n${arr}    </>\n  ),\n`;
+    return `  path: (\n    <>\n${arr}    </>\n  )${comma}\n`;
 };
 
-export const composeCreateIconCode = (name, json) => {
+export const composeCreateIconCode = (name, json, { commas, semicolons }) => {
     const viewBox = json.attributes.viewBox;
     const pathNodes = json.children.filter(node => node.name === "path");
-    const paths = composePaths(pathNodes);
+    const paths = composePaths(pathNodes, commas);
 
     return (
         `export const ${name} = createIcon({\n` +
         `  displayName: "${name}",\n` +
         (viewBox ? `  viewBox: "${viewBox}",\n` : "") +
         paths +
-        `});`
+        `})${semicolons ? ";" : ""}`
     );
 };
 
-export const composeAggregateCreateIconCode = (files, includeImport) =>
+export const composeAggregateCreateIconCode = (files, includeImport, options) =>
     [
-        ...(includeImport ? [importString] : []),
-        ...files.map(({ name, json }) => composeCreateIconCode(name, json)),
+        ...(includeImport ? [getImportString(options.semicolons)] : []),
+        ...files.map(({ name, json }) =>
+            composeCreateIconCode(name, json, options)
+        ),
     ].join("\n\n");

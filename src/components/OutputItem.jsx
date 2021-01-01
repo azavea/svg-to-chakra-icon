@@ -65,11 +65,12 @@ function OutputItem({
     pulse,
     disabled = false,
     onToggle,
+    settings,
     children,
     ...props
 }) {
     const { name, json, optimized } = file;
-    const code = json ? composeCreateIconCode(name, json) : children;
+    const code = json ? composeCreateIconCode(name, json, settings) : children;
     const { onCopy, hasCopied } = useClipboard(code);
 
     const [shouldHighlight, setShouldHighlight] = useState(false);

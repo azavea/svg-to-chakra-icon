@@ -4,8 +4,13 @@ import { MdClose } from "react-icons/md";
 import { FaCopy } from "react-icons/fa";
 
 import OutputItem from "./OutputItem";
+import Settings from "./Settings";
+import useLocalStorage from "../utils/useLocalStorage";
 import useClipboard from "../utils/useClipboard";
-import { importString, composeAggregateCreateIconCode } from "../utils/chakra";
+import {
+    getImportString,
+    composeAggregateCreateIconCode,
+} from "../utils/chakra";
 
 const sx = {
     output: {
@@ -47,12 +52,20 @@ const sx = {
         mr: 2,
         fontSize: "2.4rem",
     },
+    settings: {
+        mt: 4,
+    },
 };
 
 function Output({ files, onReset, ...props }) {
+    const [settings, setSettings] = useLocalStorage("settings", {
+        commas: true,
+        semicolons: true,
+    });
+
     const [includeImport, setIncludeImport] = useState(true);
 
-    const code = composeAggregateCreateIconCode(files, includeImport);
+    const code = composeAggregateCreateIconCode(files, includeImport, settings);
     const { onCopy, hasCopied } = useClipboard(code);
 
     const [shouldHighlight, setShouldHighlight] = useState(false);
@@ -107,8 +120,9 @@ function Output({ files, onReset, ...props }) {
                 mb={0.5}
                 disabled={!includeImport}
                 onToggle={setIncludeImport}
+                settings={settings}
             >
-                {importString}
+                {getImportString(settings.semicolons)}
             </OutputItem>
             {files.map(file => (
                 <OutputItem
@@ -116,9 +130,15 @@ function Output({ files, onReset, ...props }) {
                     key={file.name}
                     highlight={shouldHighlight}
                     pulse={shouldPulse}
+                    settings={settings}
                     mb={0.5}
                 />
             ))}
+            <Settings
+                {...sx.settings}
+                settings={settings}
+                onChange={setSettings}
+            />
         </Flex>
     );
 }
