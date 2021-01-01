@@ -19,7 +19,7 @@ const sx = {
     },
     heading: {
         fontSize: "2.8rem",
-        fontWeight: "normal",
+        fontWeight: 400,
         lineHeight: 1,
     },
     reset: {

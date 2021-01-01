@@ -17,14 +17,14 @@ const sx = {
     },
     message: {
         fontSize: "lg",
-        fontWeight: "bold",
+        fontWeight: 700,
         textAlign: "center",
         whiteSpace: "nowrap",
     },
     append: {
         mt: 1,
         fontSize: "xs",
-        fontWeight: "bold",
+        fontWeight: 700,
         textAlign: "center",
         whiteSpace: "nowrap",
         opacity: 0.6,

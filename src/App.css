@@ -1,0 +1,23 @@
+/* catamaran-regular - latin */
+@font-face {
+    font-family: "Catamaran";
+    font-style: normal;
+    font-weight: 400;
+    src: local(""),
+        url("./fonts/catamaran-v7-latin-regular.woff2") format("woff2");
+}
+/* catamaran-700 - latin */
+@font-face {
+    font-family: "Catamaran";
+    font-style: normal;
+    font-weight: 700;
+    src: local(""), url("./fonts/catamaran-v7-latin-700.woff2") format("woff2");
+}
+/* roboto-mono-regular - latin */
+@font-face {
+    font-family: "Roboto Mono";
+    font-style: normal;
+    font-weight: 400;
+    src: local(""),
+        url("./fonts/roboto-mono-v12-latin-regular.woff2") format("woff2");
+}

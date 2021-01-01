@@ -32,7 +32,8 @@ const sx = {
         py: 2,
         overflowX: "auto",
         bg: "#EDF2F7AA",
-        font: "mono",
+        fontFamily: "mono",
+        whiteSpace: "pre",
     },
     copy: {
         position: "absolute",
@@ -122,7 +123,7 @@ function OutputItem({
                 )}
             </Center>
             <Box {...sx.code} opacity={disabled ? 0.3 : 1}>
-                <pre>{code}</pre>
+                {code}
             </Box>
             {!disabled && (
                 <IconButton

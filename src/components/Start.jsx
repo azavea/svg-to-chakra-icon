@@ -15,11 +15,12 @@ const sx = {
     heading: {
         mb: 4,
         fontSize: "6xl",
+        fontWeight: 400,
     },
     desc: {
         mb: 8,
         fontSize: "xl",
-        fontWeight: "bold",
+        fontWeight: 700,
     },
 };
 
@@ -28,10 +29,10 @@ function Start({ children, ...props }) {
         <Flex {...sx.start} {...props}>
             <Box {...sx.header} as="header">
                 <Heading as="h1" {...sx.heading}>
-                    SVG to Chakra Icon
+                    &lt;svg&gt; &rArr; Chakra UI
                 </Heading>
                 <Text {...sx.desc}>
-                    Optimize and convert SVG icons to Chakra UI JSX
+                    Optimize &amp; convert SVG files to Chakra Icon components
                 </Text>
             </Box>
             {children}
