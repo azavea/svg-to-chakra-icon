@@ -1,4 +1,4 @@
-const importString = 'import { createIcon } from "@chakra-ui/icons"';
+const importString = 'import { createIcon } from "@chakra-ui/react"';
 
 export const getImportString = semicolons =>
     `${importString}${semicolons ? ";" : ""}`;
