@@ -117,7 +117,7 @@ function Output({ files, onReset, ...props }) {
                 </Button>
             </Flex>
             <OutputItem
-                highlight={shouldHighlight}
+                highlight={settings.includeImport && shouldHighlight}
                 pulse={shouldPulse}
                 mb={0.5}
                 disabled={!settings.includeImport}
