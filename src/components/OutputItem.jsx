@@ -42,7 +42,7 @@ const sx = {
         right: 0,
         p: 2,
         height: "auto",
-        fontSize: "2.4rem",
+        fontSize: "2xl",
         bg: "transparent",
         color: "blue.700",
         opacity: 0.5,

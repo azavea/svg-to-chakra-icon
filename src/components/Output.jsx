@@ -34,7 +34,7 @@ const sx = {
         ml: 10,
         p: 2,
         height: "auto",
-        fontSize: "1.6rem",
+        fontSize: "md",
         opacity: 0.8,
         _hover: {
             color: "red.700",
@@ -48,7 +48,7 @@ const sx = {
     },
     icon: {
         mr: 2,
-        fontSize: "2.4rem",
+        fontSize: "2xl",
     },
     settings: {
         mb: 1,
