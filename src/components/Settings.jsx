@@ -1,4 +1,4 @@
-import { Flex, Switch, FormLabel } from "@chakra-ui/react";
+import { Flex, Switch, FormLabel, Text } from "@chakra-ui/react";
 
 const sx = {
     settings: {
@@ -20,40 +20,55 @@ const sx = {
         pl: 1.5,
         cursor: "pointer",
     },
+    code: {
+        fontFamily: "mono",
+    },
     switch: {},
 };
 
+function SettingToggle({ name, isChecked, label, onChange, ...props }) {
+    return (
+        <Flex {...sx.setting} {...props}>
+            <Switch
+                {...sx.switch}
+                id={name}
+                isChecked={isChecked}
+                onChange={({ target }) => onChange({ [name]: target.checked })}
+            />
+            <FormLabel {...sx.label} htmlFor={name}>
+                {label}
+            </FormLabel>
+        </Flex>
+    );
+}
+
 function Settings({ settings, onChange, ...props }) {
-    const { commas, semicolons } = settings;
+    const { includeExport, commas, semicolons } = settings;
 
     return (
         <Flex {...sx.settings} {...props}>
-            <Flex {...sx.setting}>
-                <Switch
-                    {...sx.switch}
-                    id="commas"
-                    isChecked={commas}
-                    onChange={({ target }) =>
-                        onChange({ commas: target.checked })
-                    }
-                />
-                <FormLabel {...sx.label} htmlFor="commas">
-                    Trailing commas
-                </FormLabel>
-            </Flex>
-            <Flex {...sx.setting}>
-                <Switch
-                    {...sx.switch}
-                    id="semicolons"
-                    isChecked={semicolons}
-                    onChange={({ target }) =>
-                        onChange({ semicolons: target.checked })
-                    }
-                />
-                <FormLabel {...sx.label} htmlFor="semicolons">
-                    Semicolons
-                </FormLabel>
-            </Flex>
+            <SettingToggle
+                name="includeExport"
+                isChecked={includeExport}
+                onChange={onChange}
+                label={
+                    <Text as="code" {...sx.code}>
+                        export
+                    </Text>
+                }
+            />
+            <SettingToggle
+                name="commas"
+                isChecked={commas}
+                onChange={onChange}
+                label="Trailing commas"
+            />
+            <SettingToggle
+                name="semicolons"
+                isChecked={semicolons}
+                onChange={onChange}
+                label="Semicolons"
+            />
         </Flex>
     );
 }

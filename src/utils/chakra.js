@@ -34,17 +34,23 @@ const composePaths = (pathNodes = [], commas) => {
     return `  path: (\n    <>\n${arr}    </>\n  )${comma}\n`;
 };
 
-export const composeCreateIconCode = (name, json, { commas, semicolons }) => {
+export const composeCreateIconCode = (
+    name,
+    json,
+    { commas, semicolons, includeExport }
+) => {
     const viewBox = json.attributes.viewBox;
     const pathNodes = json.children.filter(node => node.name === "path");
     const paths = composePaths(pathNodes, commas);
+    const exportStr = includeExport ? "export " : "";
+    const semicolon = semicolons ? ";" : "";
 
     return (
-        `export const ${name} = createIcon({\n` +
+        `${exportStr}const ${name} = createIcon({\n` +
         `  displayName: "${name}",\n` +
         (viewBox ? `  viewBox: "${viewBox}",\n` : "") +
         paths +
-        `})${semicolons ? ";" : ""}`
+        `})${semicolon}`
     );
 };
 
