@@ -28,8 +28,16 @@ const sx = {
         _hover: {
             bg: "transparent",
         },
-        _focus: {
-            color: "highlight",
+        _active: {
+            bg: "none",
+        },
+        sx: {
+            ".js-focus-visible &:focus": {
+                boxShadow: "none",
+            },
+            ".js-focus-visible &.focus-visible": {
+                color: "highlight",
+            },
         },
     },
     formatPicker: {},
@@ -44,11 +52,19 @@ const sx = {
             bg: "highlightTint",
             opacity: 1,
         },
-        _focus: {
-            color: "highlight",
-            bg: "highlightTint",
-            boxShadow: "none",
-            opacity: 1,
+        _active: {
+            bg: "highlight",
+            color: "highlightTint",
+        },
+        sx: {
+            ".js-focus-visible &:focus": {
+                boxShadow: "none",
+            },
+            ".js-focus-visible &.focus-visible": {
+                color: "highlight",
+                bg: "highlightTint",
+                opacity: 1,
+            },
         },
     },
     icon: {

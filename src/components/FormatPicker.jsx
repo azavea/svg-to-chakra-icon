@@ -18,16 +18,21 @@ const sx = {
             bg: "none",
             borderBottomColor: "#00000066",
         },
-        _focus: {
-            color: "highlight",
-        },
         _selected: {
             borderBottomColor: "black",
             _hover: {
                 borderBottomColor: "black",
             },
-            _focus: {
-                borderBottomColor: "highlight",
+        },
+        sx: {
+            ".js-focus-visible &:focus": {
+                boxShadow: "none",
+            },
+            ".js-focus-visible &.focus-visible": {
+                color: "highlight",
+                "&[aria-selected=true]": {
+                    borderBottomColor: "highlight",
+                },
             },
         },
     },

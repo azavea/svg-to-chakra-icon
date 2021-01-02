@@ -1,4 +1,4 @@
-import { Flex, Switch, FormLabel, Text } from "@chakra-ui/react";
+import { Flex, Switch, FormLabel, Text, useToken } from "@chakra-ui/react";
 
 const sx = {
     settings: {
@@ -14,6 +14,16 @@ const sx = {
         mx: 2,
         mb: 2,
     },
+    switch: {
+        sx: {
+            ".js-focus-visible & :focus+[data-focus]": {
+                boxShadow: "none",
+            },
+            ".js-focus-visible & .focus-visible+[data-focus]": {
+                boxShadow: "0 0 0 3px var(--highlight)",
+            },
+        },
+    },
     label: {
         display: "flex",
         direction: "row",
@@ -26,7 +36,6 @@ const sx = {
     code: {
         fontFamily: "mono",
     },
-    switch: {},
 };
 
 function SettingToggle({
@@ -38,8 +47,15 @@ function SettingToggle({
     ariaLabel,
     ...props
 }) {
+    const [highlight] = useToken("colors", ["highlight"]);
+
     return (
-        <Flex {...sx.setting} opacity={fade ? 0.5 : 1} {...props}>
+        <Flex
+            {...sx.setting}
+            opacity={fade ? 0.5 : 1}
+            {...props}
+            sx={{ "--highlight": highlight }}
+        >
             <Switch
                 {...sx.switch}
                 id={name}

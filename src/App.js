@@ -5,6 +5,7 @@ import Main from "./components/Main";
 import { theme } from "./theme";
 
 import "./App.css";
+import "focus-visible/dist/focus-visible.min";
 
 function App() {
     return (

@@ -62,6 +62,10 @@ const sx = {
     copyHighlight: {
         color: "highlight",
         opacity: 0,
+        _active: {
+            bg: "highlight",
+            color: "highlightTint",
+        },
     },
 };
 
