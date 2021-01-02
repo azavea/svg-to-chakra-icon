@@ -48,10 +48,12 @@ export const composeCreateIconCode = (name, json, { commas, semicolons }) => {
     );
 };
 
-export const composeAggregateCreateIconCode = (files, includeImport, options) =>
-    [
-        ...(includeImport ? [getImportString(options.semicolons)] : []),
+export const composeAggregateCreateIconCode = (files, options) => {
+    const { includeImport, semicolons } = options;
+    return [
+        ...(includeImport ? [getImportString(semicolons)] : []),
         ...files.map(({ name, json }) =>
             composeCreateIconCode(name, json, options)
         ),
     ].join("\n\n");
+};

@@ -25,7 +25,6 @@ const sx = {
 
 function Settings({ settings, onChange, ...props }) {
     const { commas, semicolons } = settings;
-    const handleChange = update => onChange({ commas, semicolons, ...update });
 
     return (
         <Flex {...sx.settings} {...props}>
@@ -35,7 +34,7 @@ function Settings({ settings, onChange, ...props }) {
                     id="commas"
                     isChecked={commas}
                     onChange={({ target }) =>
-                        handleChange({ commas: target.checked })
+                        onChange({ commas: target.checked })
                     }
                 />
                 <FormLabel {...sx.label} htmlFor="commas">
@@ -48,7 +47,7 @@ function Settings({ settings, onChange, ...props }) {
                     id="semicolons"
                     isChecked={semicolons}
                     onChange={({ target }) =>
-                        handleChange({ semicolons: target.checked })
+                        onChange({ semicolons: target.checked })
                     }
                 />
                 <FormLabel {...sx.label} htmlFor="semicolons">

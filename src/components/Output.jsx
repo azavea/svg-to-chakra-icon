@@ -59,13 +59,15 @@ const sx = {
 
 function Output({ files, onReset, ...props }) {
     const [settings, setSettings] = useLocalStorage("settings", {
+        includeImport: true,
         commas: true,
         semicolons: true,
     });
 
-    const [includeImport, setIncludeImport] = useState(true);
+    const handleSettingsChange = update =>
+        setSettings(current => ({ ...current, ...update }));
 
-    const code = composeAggregateCreateIconCode(files, includeImport, settings);
+    const code = composeAggregateCreateIconCode(files, settings);
     const { onCopy, hasCopied } = useClipboard(code);
 
     const [shouldHighlight, setShouldHighlight] = useState(false);
@@ -118,8 +120,10 @@ function Output({ files, onReset, ...props }) {
                 highlight={shouldHighlight}
                 pulse={shouldPulse}
                 mb={0.5}
-                disabled={!includeImport}
-                onToggle={setIncludeImport}
+                disabled={!settings.includeImport}
+                onToggle={value =>
+                    handleSettingsChange({ includeImport: value })
+                }
                 settings={settings}
             >
                 {getImportString(settings.semicolons)}
@@ -137,7 +141,7 @@ function Output({ files, onReset, ...props }) {
             <Settings
                 {...sx.settings}
                 settings={settings}
-                onChange={setSettings}
+                onChange={handleSettingsChange}
             />
         </Flex>
     );
