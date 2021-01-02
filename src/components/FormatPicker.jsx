@@ -18,29 +18,41 @@ const sx = {
             bg: "none",
             borderBottomColor: "#00000066",
         },
-    },
-    on: {
-        borderBottomColor: "black",
-        _hover: {
+        _selected: {
             borderBottomColor: "black",
+            _hover: {
+                borderBottomColor: "black",
+            },
         },
     },
 };
 
 function FormatPicker({ format, onChange, ...props }) {
     return (
-        <Flex {...sx.picker} {...props}>
+        <Flex
+            {...sx.picker}
+            {...props}
+            role="listbox"
+            aria-label="Choose an output format"
+            aria-activedescendant={format}
+        >
             <Button
                 {...sx.button}
-                {...(format === "function" ? sx.on : {})}
+                id="function"
                 onClick={() => onChange("function")}
+                aria-selected={format === "function"}
+                aria-label="createIcon function"
+                role="option"
             >
                 createIcon()
             </Button>
             <Button
                 {...sx.button}
-                {...(format === "component" ? sx.on : {})}
+                id="component"
                 onClick={() => onChange("component")}
+                aria-selected={format === "component"}
+                aria-label="Icon component"
+                role="option"
             >
                 &lt;Icon&gt;
             </Button>
