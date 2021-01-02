@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
-import { Flex, Heading, Button, IconButton, Icon } from "@chakra-ui/react";
-import { MdClose } from "react-icons/md";
+import { Flex, Button, IconButton, Icon } from "@chakra-ui/react";
 import { FaCopy } from "react-icons/fa";
 
+import Logo from "./Logo";
+import FormatPicker from "./FormatPicker";
 import OutputItem from "./OutputItem";
 import Settings from "./Settings";
 import useLocalStorage from "../utils/useLocalStorage";
 import useClipboard from "../utils/useClipboard";
-import {
-    getImportString,
-    composeAggregateCreateIconCode,
-} from "../utils/chakra";
+import { getImportString, composeAggregateIconCode } from "../utils/chakra";
 
 const sx = {
     output: {
@@ -19,40 +17,47 @@ const sx = {
         p: 4,
     },
     header: {
+        justify: "space-between",
         align: "center",
-        mb: 2,
+        mb: 4,
     },
-    heading: {
-        fontSize: "2.8rem",
-        fontWeight: 400,
-        lineHeight: 1,
-    },
-    reset: {
-        ml: 1.5,
+    home: {
         p: 1,
-        height: "auto",
+        width: "24rem",
         bg: "none",
-        fontSize: "2.4rem",
-        opacity: 0.8,
+        _hover: {
+            bg: "transparent",
+        },
     },
+    formatPicker: {},
     copy: {
-        ml: "auto",
+        ml: 10,
         p: 2,
         height: "auto",
         fontSize: "1.6rem",
         opacity: 0.8,
+        _hover: {
+            color: "red.700",
+            opacity: 1,
+        },
+        _focus: {
+            color: "red.700",
+            boxShadow: "none",
+            opacity: 1,
+        },
     },
     icon: {
         mr: 2,
         fontSize: "2.4rem",
     },
     settings: {
-        mt: 4,
+        mb: 1,
     },
 };
 
 function Output({ files, onReset, ...props }) {
     const [settings, setSettings] = useLocalStorage("settings", {
+        format: "function",
         includeImport: true,
         commas: true,
         semicolons: true,
@@ -61,7 +66,7 @@ function Output({ files, onReset, ...props }) {
     const handleSettingsChange = update =>
         setSettings(current => ({ ...current, ...update }));
 
-    const code = composeAggregateCreateIconCode(files, settings);
+    const code = composeAggregateIconCode(files, settings);
     const { onCopy, hasCopied } = useClipboard(code);
 
     const [shouldHighlight, setShouldHighlight] = useState(false);
@@ -89,14 +94,16 @@ function Output({ files, onReset, ...props }) {
     return (
         <Flex {...sx.output} {...props}>
             <Flex {...sx.header}>
-                <Heading as="h1" {...sx.heading}>{`${files.length} icon${
-                    files.length === 1 ? "" : "s"
-                } formatted for Chakra UI`}</Heading>
                 <IconButton
+                    {...sx.home}
                     onClick={onReset}
-                    {...sx.reset}
-                    isRound
-                    icon={<MdClose />}
+                    title="Reset"
+                    icon={<Logo height="auto" width="100%" />}
+                />
+                <FormatPicker
+                    format={settings.format}
+                    onChange={format => handleSettingsChange({ format })}
+                    {...sx.formatPicker}
                 />
                 <Button
                     {...sx.copy}
@@ -110,6 +117,11 @@ function Output({ files, onReset, ...props }) {
                     <Icon {...sx.icon} as={FaCopy} /> Copy all
                 </Button>
             </Flex>
+            <Settings
+                {...sx.settings}
+                settings={settings}
+                onChange={handleSettingsChange}
+            />
             <OutputItem
                 highlight={settings.includeImport && shouldHighlight}
                 pulse={shouldPulse}
@@ -117,7 +129,7 @@ function Output({ files, onReset, ...props }) {
                 disabled={!settings.includeImport}
                 settings={settings}
             >
-                {getImportString(settings.semicolons)}
+                {getImportString(settings)}
             </OutputItem>
             {files.map(file => (
                 <OutputItem
@@ -129,11 +141,6 @@ function Output({ files, onReset, ...props }) {
                     mb={0.5}
                 />
             ))}
-            <Settings
-                {...sx.settings}
-                settings={settings}
-                onChange={handleSettingsChange}
-            />
         </Flex>
     );
 }

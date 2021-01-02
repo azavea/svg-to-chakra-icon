@@ -3,7 +3,7 @@ import { Flex, Box, Center, IconButton, Icon } from "@chakra-ui/react";
 import { FaCopy } from "react-icons/fa";
 
 import useClipboard from "../utils/useClipboard";
-import { composeCreateIconCode } from "../utils/chakra";
+import { composeIconCode } from "../utils/chakra";
 import { pulseAnimation } from "../constants";
 
 const sx = {
@@ -53,6 +53,7 @@ const sx = {
         },
         _focus: {
             boxShadow: "none",
+            opacity: 0.8,
         },
         _disabled: {
             opacity: 0,
@@ -75,7 +76,7 @@ function OutputItem({
     ...props
 }) {
     const { name, json, optimized } = file;
-    const code = json ? composeCreateIconCode(name, json, settings) : children;
+    const code = json ? composeIconCode(name, json, settings) : children;
     const { onCopy, hasCopied } = useClipboard(code);
 
     const [shouldHighlight, setShouldHighlight] = useState(false);

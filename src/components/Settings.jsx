@@ -29,9 +29,9 @@ const sx = {
     switch: {},
 };
 
-function SettingToggle({ name, isChecked, label, onChange, ...props }) {
+function SettingToggle({ name, isChecked, label, onChange, fade, ...props }) {
     return (
-        <Flex {...sx.setting} {...props}>
+        <Flex {...sx.setting} opacity={fade ? 0.5 : 1} {...props}>
             <Switch
                 {...sx.switch}
                 id={name}
@@ -46,7 +46,13 @@ function SettingToggle({ name, isChecked, label, onChange, ...props }) {
 }
 
 function Settings({ settings, onChange, ...props }) {
-    const { includeImport, includeExport, commas, semicolons } = settings;
+    const {
+        includeImport,
+        includeExport,
+        commas,
+        semicolons,
+        format,
+    } = settings;
 
     return (
         <Flex {...sx.settings} {...props}>
@@ -81,6 +87,7 @@ function Settings({ settings, onChange, ...props }) {
                 isChecked={commas}
                 onChange={onChange}
                 label="Trailing commas"
+                fade={format === "component"}
             />
         </Flex>
     );
