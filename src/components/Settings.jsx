@@ -29,7 +29,15 @@ const sx = {
     switch: {},
 };
 
-function SettingToggle({ name, isChecked, label, onChange, fade, ...props }) {
+function SettingToggle({
+    name,
+    isChecked,
+    label,
+    onChange,
+    fade,
+    ariaLabel,
+    ...props
+}) {
     return (
         <Flex {...sx.setting} opacity={fade ? 0.5 : 1} {...props}>
             <Switch
@@ -37,6 +45,7 @@ function SettingToggle({ name, isChecked, label, onChange, fade, ...props }) {
                 id={name}
                 isChecked={isChecked}
                 onChange={({ target }) => onChange({ [name]: target.checked })}
+                aria-label={ariaLabel}
             />
             <FormLabel {...sx.label} htmlFor={name}>
                 {label}
@@ -65,6 +74,7 @@ function Settings({ settings, onChange, ...props }) {
                         import
                     </Text>
                 }
+                ariaLabel="Include import statment"
             />
             <SettingToggle
                 name="includeExport"
@@ -75,18 +85,21 @@ function Settings({ settings, onChange, ...props }) {
                         export
                     </Text>
                 }
+                ariaLabel="Prepend export to each icon definition"
             />
             <SettingToggle
                 name="semicolons"
                 isChecked={semicolons}
                 onChange={onChange}
                 label="semicolons"
+                ariaLabel="Print semicolons at the ends of statements"
             />
             <SettingToggle
                 name="commas"
                 isChecked={commas}
                 onChange={onChange}
                 label="trailing commas"
+                ariaLabel="Print trailing comma for multi-line lists"
                 fade={format === "component"}
             />
         </Flex>

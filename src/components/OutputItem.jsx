@@ -12,7 +12,7 @@ const sx = {
         bg: "white",
     },
     outputItemHighlight: {
-        bg: "red.100",
+        bg: "highlightTint",
     },
     preview: {
         flex: "none",
@@ -21,10 +21,11 @@ const sx = {
     },
     icon: {
         fontSize: "8rem",
-        opacity: 0.7,
+        opacity: 0.6,
     },
     iconHighlight: {
-        color: "red.700",
+        color: "highlight",
+        opacity: 0.4,
     },
     code: {
         flex: "auto",
@@ -44,7 +45,6 @@ const sx = {
         height: "auto",
         fontSize: "2xl",
         bg: "transparent",
-        color: "blue.700",
         opacity: 0.5,
         transition: "opacity 150ms",
         _hover: {
@@ -52,7 +52,6 @@ const sx = {
             opacity: 0.8,
         },
         _focus: {
-            boxShadow: "none",
             opacity: 0.8,
         },
         _disabled: {
@@ -61,7 +60,7 @@ const sx = {
         },
     },
     copyHighlight: {
-        color: "red.700",
+        color: "highlight",
         opacity: 0,
     },
 };
@@ -121,7 +120,11 @@ function OutputItem({
                     />
                 )}
             </Center>
-            <Box {...sx.code} opacity={disabled ? 0.3 : 1}>
+            <Box
+                {...sx.code}
+                opacity={disabled ? 0.3 : 1}
+                aria-label={`Code for ${name}`}
+            >
                 {code}
             </Box>
             <IconButton
@@ -129,13 +132,13 @@ function OutputItem({
                 {...(doHighlight ? sx.copyHighlight : {})}
                 icon={<Icon as={FaCopy} />}
                 size="lg"
-                aria-label="Copy source code"
                 disabled={disabled}
                 onClick={handleClick}
                 onMouseEnter={handleFocus}
                 onFocus={handleFocus}
                 onMouseLeave={handleBlur}
                 onBlur={handleBlur}
+                aria-label={`Copy code for ${name} to clipboard`}
             />
         </Flex>
     );

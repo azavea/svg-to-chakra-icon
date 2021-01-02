@@ -28,6 +28,9 @@ const sx = {
         _hover: {
             bg: "transparent",
         },
+        _focus: {
+            color: "highlight",
+        },
     },
     formatPicker: {},
     copy: {
@@ -37,11 +40,13 @@ const sx = {
         fontSize: "md",
         opacity: 0.8,
         _hover: {
-            color: "red.700",
+            color: "highlight",
+            bg: "highlightTint",
             opacity: 1,
         },
         _focus: {
-            color: "red.700",
+            color: "highlight",
+            bg: "highlightTint",
             boxShadow: "none",
             opacity: 1,
         },
@@ -112,7 +117,7 @@ function Output({ files, onReset, ...props }) {
                     onFocus={handleFocus}
                     onMouseLeave={handleBlur}
                     onBlur={handleBlur}
-                    aria-label="Copy source code"
+                    aria-label="Copy Chakra code for all icons"
                 >
                     <Icon {...sx.icon} as={FaCopy} /> Copy all
                 </Button>

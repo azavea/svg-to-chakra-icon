@@ -18,10 +18,16 @@ const sx = {
             bg: "none",
             borderBottomColor: "#00000066",
         },
+        _focus: {
+            color: "highlight",
+        },
         _selected: {
             borderBottomColor: "black",
             _hover: {
                 borderBottomColor: "black",
+            },
+            _focus: {
+                borderBottomColor: "highlight",
             },
         },
     },

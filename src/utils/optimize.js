@@ -99,6 +99,7 @@ const plugins = [
                 {
                     focusable: false,
                     "aria-hidden": true,
+                    fill: "currentColor",
                     role: "presentation",
                     width: "1em",
                     height: "1em",
