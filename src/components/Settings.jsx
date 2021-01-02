@@ -80,13 +80,13 @@ function Settings({ settings, onChange, ...props }) {
                 name="semicolons"
                 isChecked={semicolons}
                 onChange={onChange}
-                label="Semicolons"
+                label="semicolons"
             />
             <SettingToggle
                 name="commas"
                 isChecked={commas}
                 onChange={onChange}
-                label="Trailing commas"
+                label="trailing commas"
                 fade={format === "component"}
             />
         </Flex>
