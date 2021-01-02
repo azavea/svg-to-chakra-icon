@@ -1,4 +1,4 @@
-import { Flex, Box, Text, createIcon } from "@chakra-ui/react";
+import { Flex, Text, createIcon } from "@chakra-ui/react";
 
 const SvgToChakra = createIcon({
     displayName: "SvgToChakra",
@@ -15,9 +15,10 @@ const sx = {
         py: 10,
     },
     header: {
+        direction: "column",
+        align: "center",
         my: 16,
         maxWidth: "64rem",
-        textAlign: "center",
     },
     logo: {
         width: "56rem",
@@ -29,18 +30,19 @@ const sx = {
         my: 8,
         fontSize: "xl",
         fontWeight: 700,
+        textAlign: "center",
     },
 };
 
 function Start({ children, ...props }) {
     return (
         <Flex {...sx.start} {...props}>
-            <Box {...sx.header} as="header">
+            <Flex {...sx.header} as="header">
                 <SvgToChakra {...sx.logo} aria-label="SVG to Chakra UI" />
                 <Text {...sx.desc}>
                     Optimize &amp; convert SVG files to Chakra Icon components
                 </Text>
-            </Box>
+            </Flex>
             {children}
         </Flex>
     );

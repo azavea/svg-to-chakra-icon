@@ -33,8 +33,8 @@ export const theme = extendTheme({
         16: "10.4rem",
     },
     fonts: {
-        heading: "Catamaran, sans-serif",
-        body: "Catamaran, sans-serif",
+        heading: "'Inter var', sans-serif",
+        body: "'Inter var', sans-serif",
         mono: "'Roboto Mono', monospace",
     },
     fontSizes: {
