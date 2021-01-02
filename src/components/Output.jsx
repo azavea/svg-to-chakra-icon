@@ -25,8 +25,10 @@ const sx = {
         p: 1,
         width: "24rem",
         bg: "none",
+        opacity: 0.6,
         _hover: {
             bg: "transparent",
+            opacity: 1,
         },
         _active: {
             bg: "none",
