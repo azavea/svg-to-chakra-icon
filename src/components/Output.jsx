@@ -34,9 +34,6 @@ const sx = {
         bg: "none",
         fontSize: "2.4rem",
         opacity: 0.8,
-        ":hover": {
-            opacity: 1,
-        },
     },
     copy: {
         ml: "auto",
@@ -44,9 +41,6 @@ const sx = {
         height: "auto",
         fontSize: "1.6rem",
         opacity: 0.8,
-        ":hover": {
-            opacity: 1,
-        },
     },
     icon: {
         mr: 2,
@@ -121,9 +115,6 @@ function Output({ files, onReset, ...props }) {
                 pulse={shouldPulse}
                 mb={0.5}
                 disabled={!settings.includeImport}
-                onToggle={value =>
-                    handleSettingsChange({ includeImport: value })
-                }
                 settings={settings}
             >
                 {getImportString(settings.semicolons)}

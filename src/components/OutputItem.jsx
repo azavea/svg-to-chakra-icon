@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Flex, Box, Center, IconButton, Icon, Switch } from "@chakra-ui/react";
+import { Flex, Box, Center, IconButton, Icon } from "@chakra-ui/react";
 import { FaCopy } from "react-icons/fa";
 
 import useClipboard from "../utils/useClipboard";
@@ -34,6 +34,7 @@ const sx = {
         bg: "#EDF2F7AA",
         fontFamily: "mono",
         whiteSpace: "pre",
+        transition: "opacity 150ms",
     },
     copy: {
         position: "absolute",
@@ -45,17 +46,22 @@ const sx = {
         bg: "transparent",
         color: "blue.700",
         opacity: 0.5,
-        ":hover": {
+        transition: "opacity 150ms",
+        _hover: {
             bg: "transparent",
-            opacity: 1,
+            opacity: 0.8,
         },
-        ":focus": {
+        _focus: {
             boxShadow: "none",
+        },
+        _disabled: {
+            opacity: 0,
+            pointerEvents: "none",
         },
     },
     copyHighlight: {
         color: "red.700",
-        opacity: 1,
+        opacity: 0,
     },
 };
 
@@ -64,7 +70,6 @@ function OutputItem({
     highlight,
     pulse,
     disabled = false,
-    onToggle,
     settings,
     children,
     ...props
@@ -114,32 +119,23 @@ function OutputItem({
                         animation={doPulse ? pulseAnimation : null}
                     />
                 )}
-                {onToggle && (
-                    <Switch
-                        isChecked={!disabled}
-                        onChange={e => onToggle(e.target.checked)}
-                        size="md"
-                        colorScheme="teal"
-                    />
-                )}
             </Center>
             <Box {...sx.code} opacity={disabled ? 0.3 : 1}>
                 {code}
             </Box>
-            {!disabled && (
-                <IconButton
-                    {...sx.copy}
-                    {...(doHighlight ? sx.copyHighlight : {})}
-                    icon={<Icon as={FaCopy} />}
-                    size="lg"
-                    aria-label="Copy source code"
-                    onClick={handleClick}
-                    onMouseEnter={handleFocus}
-                    onFocus={handleFocus}
-                    onMouseLeave={handleBlur}
-                    onBlur={handleBlur}
-                />
-            )}
+            <IconButton
+                {...sx.copy}
+                {...(doHighlight ? sx.copyHighlight : {})}
+                icon={<Icon as={FaCopy} />}
+                size="lg"
+                aria-label="Copy source code"
+                disabled={disabled}
+                onClick={handleClick}
+                onMouseEnter={handleFocus}
+                onFocus={handleFocus}
+                onMouseLeave={handleBlur}
+                onBlur={handleBlur}
+            />
         </Flex>
     );
 }
