@@ -45,24 +45,33 @@ const sx = {
         opacity: 0.8,
         transition: "opacity 150ms",
         _hover: {
-            bg: "transparent",
             opacity: 1,
+            bg: "highlightTint",
         },
-        _focus: {
-            opacity: 1,
+        _active: {
+            bg: "highlight",
+            color: "highlightTint",
         },
         _disabled: {
             opacity: 0,
             pointerEvents: "none",
         },
+        sx: {
+            ".js-focus-visible &:focus": {
+                boxShadow: "none",
+            },
+            ".js-focus-visible &.focus-visible": {
+                color: "highlight",
+                opacity: 1,
+            },
+            ".js-focus-visible &.focus-visible:active": {
+                bg: "highlight",
+                color: "highlightTint",
+            },
+        },
     },
     copyHighlight: {
         color: "highlight",
-        opacity: 0,
-        _active: {
-            bg: "highlight",
-            color: "highlightTint",
-        },
     },
 };
 

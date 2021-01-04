@@ -67,6 +67,10 @@ const sx = {
                 bg: "highlightTint",
                 opacity: 1,
             },
+            ".js-focus-visible &.focus-visible:active": {
+                bg: "highlight",
+                color: "highlightTint",
+            },
         },
     },
     icon: {
