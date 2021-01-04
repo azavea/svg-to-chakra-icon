@@ -94,14 +94,21 @@ function OutputItem({
     const doHighlight = highlight || shouldHighlight;
     const doPulse = pulse || shouldPulse;
 
+    // Pulse when copy button clicked
     useEffect(() => {
-        !hasCopied && setShouldPulse(false);
+        setShouldPulse(hasCopied);
     }, [hasCopied]);
 
-    const handleClick = () => {
-        onCopy();
+    // Pulse on initial load
+    useEffect(() => {
         setShouldPulse(true);
-    };
+        const timeoutId = window.setTimeout(() => {
+            setShouldPulse(false);
+        }, 300);
+        return () => window.clearTimeout(timeoutId);
+    }, []);
+
+    const handleClick = () => onCopy();
 
     const handleFocus = () => {
         setShouldPulse(false);
