@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Flex, Box, Center, IconButton, Icon } from "@chakra-ui/react";
+import Highlight, { defaultProps } from "prism-react-renderer";
+import vsDark from "prism-react-renderer/themes/vsDark";
 import { FaCopy } from "react-icons/fa";
 
 import useClipboard from "../utils/useClipboard";
@@ -9,15 +11,10 @@ import { pulseAnimation } from "../constants";
 const sx = {
     outputItem: {
         position: "relative",
-        bg: "white",
-    },
-    outputItemHighlight: {
-        bg: "highlightTint",
     },
     preview: {
         flex: "none",
         width: "20rem",
-        bg: "#FFFFFFAA",
     },
     icon: {
         fontSize: "8rem",
@@ -32,7 +29,6 @@ const sx = {
         px: 5,
         py: 2,
         overflowX: "auto",
-        bg: "#EDF2F7AA",
         fontFamily: "mono",
         whiteSpace: "pre",
         transition: "opacity 150ms",
@@ -45,14 +41,15 @@ const sx = {
         height: "auto",
         fontSize: "2xl",
         bg: "transparent",
-        opacity: 0.5,
+        color: "white",
+        opacity: 0.8,
         transition: "opacity 150ms",
         _hover: {
             bg: "transparent",
-            opacity: 0.8,
+            opacity: 1,
         },
         _focus: {
-            opacity: 0.8,
+            opacity: 1,
         },
         _disabled: {
             opacity: 0,
@@ -108,12 +105,8 @@ function OutputItem({
     };
 
     return (
-        <Flex
-            {...sx.outputItem}
-            {...(doHighlight ? sx.outputItemHighlight : {})}
-            {...props}
-        >
-            <Center {...sx.preview}>
+        <Flex {...sx.outputItem} opacity={disabled ? 0.3 : 1} {...props}>
+            <Center {...sx.preview} bg={optimized ? "white" : "transparent"}>
                 {optimized && (
                     <Box
                         dangerouslySetInnerHTML={{ __html: optimized }}
@@ -124,13 +117,35 @@ function OutputItem({
                     />
                 )}
             </Center>
-            <Box
-                {...sx.code}
-                opacity={disabled ? 0.3 : 1}
-                aria-label={`Code for ${name}`}
+            <Highlight
+                {...defaultProps}
+                theme={vsDark}
+                code={code}
+                language="jsx"
             >
-                {code}
-            </Box>
+                {({
+                    className,
+                    style,
+                    tokens,
+                    getLineProps,
+                    getTokenProps,
+                }) => (
+                    <Box
+                        {...sx.code}
+                        className={className}
+                        style={style}
+                        aria-label={`Code for ${name}`}
+                    >
+                        {tokens.map((line, i) => (
+                            <div {...getLineProps({ line, key: i })}>
+                                {line.map((token, key) => (
+                                    <span {...getTokenProps({ token, key })} />
+                                ))}
+                            </div>
+                        ))}
+                    </Box>
+                )}
+            </Highlight>
             <IconButton
                 {...sx.copy}
                 {...(doHighlight ? sx.copyHighlight : {})}
