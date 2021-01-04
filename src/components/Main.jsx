@@ -1,5 +1,5 @@
 import { useState, useLayoutEffect, useCallback, useEffect } from "react";
-import { Flex, Grid } from "@chakra-ui/react";
+import { Flex, Grid, useToken } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
 
 import Start from "./Start";
@@ -33,6 +33,13 @@ function Main() {
     const [files, setFiles] = useState([]);
     const [error, setError] = useState();
     const isDone = files?.length > 0;
+
+    const [colorStart, colorDrag, colorDone, colorError] = useToken("colors", [
+        "start",
+        "drag",
+        "done",
+        "error",
+    ]);
 
     const onDrop = useCallback(
         async (acceptedFiles, fileRejections, { shiftKey }) => {
@@ -102,12 +109,12 @@ function Main() {
 
     const getStatusColor = (translucent = false) => {
         const color = error
-            ? "#FC8181"
+            ? colorError
             : isDragActive
-            ? "#68D391"
+            ? colorDrag
             : isProcessing || isDone
-            ? "#38B2AC"
-            : "#F6E05E";
+            ? colorDone
+            : colorStart;
         const opacity = translucent ? "EE" : "FF";
         return `${color}${opacity}`;
     };

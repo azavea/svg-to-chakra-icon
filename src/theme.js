@@ -35,6 +35,10 @@ export const theme = extendTheme({
     colors: {
         highlight: "#D53F8C",
         highlightTint: "#FED7E2",
+        start: "#F6E05E",
+        drag: "#68D391",
+        error: "#FC8181",
+        done: "#38B2AC",
     },
     fonts: {
         heading: "'Inter var', sans-serif",
