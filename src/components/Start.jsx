@@ -7,12 +7,13 @@ const sx = {
         direction: "column",
         align: "center",
         width: "100vw",
-        py: 10,
+        py: { base: 0, sm: 10 },
     },
     header: {
         direction: "column",
         align: "center",
-        my: 16,
+        my: { base: 8, md: 16 },
+        mx: 4,
         maxWidth: "64rem",
     },
     logo: {
@@ -23,7 +24,7 @@ const sx = {
     },
     desc: {
         my: 8,
-        fontSize: "xl",
+        fontSize: { base: "lg", md: "xl" },
         fontWeight: 700,
         textAlign: "center",
     },

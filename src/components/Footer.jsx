@@ -5,7 +5,7 @@ import logo from "../img/azavea-color-full.svg";
 const sx = {
     footer: {
         placeItems: "center",
-        py: "4rem",
+        py: { base: "2.4rem", md: "4rem" },
     },
     link: {
         display: "flex",
@@ -23,7 +23,7 @@ const sx = {
         },
     },
     logo: {
-        height: "35px",
+        height: { base: "20px", md: "35px" },
     },
 };
 

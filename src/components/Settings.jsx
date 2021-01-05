@@ -11,7 +11,7 @@ const sx = {
         direction: "row",
         justify: "center",
         align: "center",
-        mx: 2,
+        mx: { base: 0.5, sm: 2 },
         mb: 2,
     },
     switch: {
@@ -30,6 +30,7 @@ const sx = {
         align: "center",
         my: 0,
         pl: 1.5,
+        fontSize: { base: "sm", md: "md" },
         whiteSpace: "nowrap",
         cursor: "pointer",
     },

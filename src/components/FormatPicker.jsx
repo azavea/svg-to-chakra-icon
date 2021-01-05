@@ -10,10 +10,10 @@ const sx = {
         align: "center",
     },
     button: {
-        mx: 3,
+        mx: { base: 1, sm: 3 },
         px: 0.5,
         py: 3,
-        fontSize: "xl",
+        fontSize: { base: "sm", sm: "lg", md: "xl" },
         bg: "none",
         color: "gray.600",
         fontFamily: "mono",

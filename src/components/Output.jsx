@@ -14,7 +14,7 @@ const sx = {
     output: {
         direction: "column",
         width: "100vw",
-        px: 4,
+        px: { base: 2, md: 4 },
         pt: 3,
         pb: 4,
     },
@@ -24,8 +24,10 @@ const sx = {
         mb: 4,
     },
     home: {
+        display: { base: "none", md: "inline-flex" },
         p: 1,
         width: "24rem",
+        minWidth: "18rem",
         bg: "none",
         opacity: 0.2,
         _focus: { opacity: 1 },
@@ -47,10 +49,11 @@ const sx = {
     },
     formatPicker: {},
     copy: {
-        ml: 10,
-        p: 2,
+        flex: "none",
+        ml: { base: 0, md: 10 },
+        p: { base: 1, sm: 2 },
         height: "auto",
-        fontSize: "md",
+        fontSize: { base: "sm", md: "md" },
         color: "highlightTint",
         bg: "highlight",
         border: "3px solid",
@@ -88,7 +91,7 @@ const sx = {
     },
     icon: {
         mr: 2,
-        fontSize: "2xl",
+        fontSize: { base: "md", md: "2xl" },
     },
     settings: {
         mb: 1,

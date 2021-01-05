@@ -15,20 +15,21 @@ const sx = {
     },
     preview: {
         flex: "none",
-        width: "20rem",
+        width: { base: "12rem", md: "20rem" },
     },
     icon: {
-        fontSize: "8rem",
+        fontSize: { base: "4rem", md: "8rem" },
     },
     iconHighlight: {
         color: "highlight",
     },
     code: {
         flex: "auto",
-        px: 5,
+        px: { base: 2, md: 5 },
         py: 2,
         overflowX: "auto",
         fontFamily: "mono",
+        fontSize: { base: "xs", md: "md" },
         whiteSpace: "pre",
     },
     copy: {
@@ -38,7 +39,7 @@ const sx = {
         p: 2,
         height: "auto",
         fontSize: "2xl",
-        bg: "transparent",
+        bg: { base: "#1e1e1ecc", md: "transparent" },
         color: "highlightTint",
         transition: "opacity 150ms",
         _hover: {
