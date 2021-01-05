@@ -64,7 +64,7 @@ function Status({
             ref={ref}
             {...sx.status}
             animation={shouldPulse ? pulseAnimation : null}
-            color={error ? "red.900" : isDragging ? "teal.800" : "teal.500"}
+            color={error ? "red.900" : isDragging ? "teal.800" : "teal.600"}
             {...props}
         >
             <Icon
