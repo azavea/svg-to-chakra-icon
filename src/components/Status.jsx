@@ -27,7 +27,6 @@ const sx = {
         fontWeight: 600,
         textAlign: "center",
         whiteSpace: "nowrap",
-        opacity: 0.6,
     },
 };
 
@@ -66,6 +65,7 @@ function Status({
             ref={ref}
             {...sx.status}
             animation={shouldPulse ? pulseAnimation : null}
+            color={error ? "red.900" : isDragging ? "teal.800" : "teal.500"}
             {...props}
         >
             <Icon
@@ -77,11 +77,9 @@ function Status({
                         : FiUploadCloud
                 }
                 {...sx.icon}
-                opacity={isDragging ? 0.8 : isProcessing ? 0 : 0.4}
+                opacity={isProcessing ? 0 : isDragging ? 1 : 0.8}
             />
-            <Text {...sx.message} opacity={isDragging ? 0.8 : 0.4}>
-                {composeMessage()}
-            </Text>
+            <Text {...sx.message}>{composeMessage()}</Text>
             {canAppend && isDragging && (
                 <Text {...sx.append}>
                     {shouldAppend

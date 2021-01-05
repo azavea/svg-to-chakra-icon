@@ -14,7 +14,9 @@ const sx = {
     output: {
         direction: "column",
         width: "100vw",
-        p: 4,
+        px: 4,
+        pt: 3,
+        pb: 4,
     },
     header: {
         justify: "space-between",
@@ -25,7 +27,8 @@ const sx = {
         p: 1,
         width: "24rem",
         bg: "none",
-        opacity: 0.6,
+        opacity: 0.2,
+        _focus: { opacity: 1 },
         _hover: {
             bg: "transparent",
             opacity: 1,
@@ -48,28 +51,38 @@ const sx = {
         p: 2,
         height: "auto",
         fontSize: "md",
-        opacity: 0.8,
+        color: "highlightTint",
+        bg: "highlight",
+        border: "3px solid",
+        borderColor: "highlight",
         _hover: {
-            color: "highlight",
-            bg: "highlightTint",
-            opacity: 1,
+            color: "#FFFFFF",
+            boxShadow: 1,
         },
         _active: {
-            bg: "highlight",
-            color: "highlightTint",
+            color: "highlight",
+            bg: "transparent",
+            boxShadow: 0,
         },
         sx: {
-            ".js-focus-visible &:focus": {
-                boxShadow: "none",
+            ".js-focus-visible &:focus:not(:hover)": {
+                boxShadow: 0,
+            },
+            ".js-focus-visible &:focus:hover": {
+                boxShadow: 1,
+            },
+            ".js-focus-visible &:focus:hover:active": {
+                boxShadow: 0,
             },
             ".js-focus-visible &.focus-visible": {
                 color: "highlight",
                 bg: "highlightTint",
-                opacity: 1,
+                boxShadow: 1,
             },
             ".js-focus-visible &.focus-visible:active": {
                 bg: "highlight",
                 color: "highlightTint",
+                boxShadow: 0,
             },
         },
     },

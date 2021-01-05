@@ -33,12 +33,13 @@ export const theme = extendTheme({
         16: "10.4rem",
     },
     colors: {
-        highlight: "#D53F8C",
-        highlightTint: "#FED7E2",
-        start: "#F6E05E",
-        drag: "#68D391",
-        error: "#FC8181",
-        done: "#38B2AC",
+        highlight: "#38B2AC",
+        highlightTint: "#E6FFFA",
+        start: "#EDF2F7",
+        drag: "#38B2AC",
+        processing: "#81E6D9",
+        error: "#FED7D7",
+        done: "#EDF2F7",
     },
     fonts: {
         heading: "'Inter var', sans-serif",
@@ -57,4 +58,10 @@ export const theme = extendTheme({
         "5xl": "4.8rem",
         "6xl": "6.4rem",
     },
+    shadows: [
+        "none",
+        "0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.20)",
+        "0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.20)",
+        "0 12px 17px 2px rgba(0,0,0,0.14), 0 5px 22px 4px rgba(0,0,0,0.12), 0 7px 8px -4px rgba(0,0,0,0.20)",
+    ],
 });

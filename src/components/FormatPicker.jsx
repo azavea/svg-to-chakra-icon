@@ -10,15 +10,20 @@ const sx = {
         align: "center",
     },
     button: {
-        mx: 4,
+        mx: 3,
         px: 0.5,
         py: 3,
         fontSize: "xl",
         bg: "none",
+        color: "gray.600",
         fontFamily: "mono",
+        textAlign: "center",
+        transition: "color 150ms",
+        _selected: {
+            color: "teal.500",
+        },
         _hover: {
             bg: "none",
-            borderBottomColor: "#00000066",
         },
         _active: {
             bg: "none",
@@ -28,7 +33,8 @@ const sx = {
                 boxShadow: "none",
             },
             ".js-focus-visible &.focus-visible": {
-                color: "highlight",
+                bg: "highlight",
+                color: "teal.50",
             },
         },
     },
@@ -36,7 +42,7 @@ const sx = {
         position: "absolute",
         bottom: 0,
         height: "3px",
-        bg: "black",
+        bg: "highlight",
         pointerEvents: "none",
         transition: "all 150ms",
     },

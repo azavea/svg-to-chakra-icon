@@ -34,12 +34,13 @@ function Main() {
     const [error, setError] = useState();
     const isDone = files?.length > 0;
 
-    const [colorStart, colorDrag, colorDone, colorError] = useToken("colors", [
-        "start",
-        "drag",
-        "done",
-        "error",
-    ]);
+    const [
+        colorStart,
+        colorDrag,
+        colorProcessing,
+        colorDone,
+        colorError,
+    ] = useToken("colors", ["start", "drag", "processing", "done", "error"]);
 
     const onDrop = useCallback(
         async (acceptedFiles, fileRejections, { shiftKey }) => {
@@ -112,7 +113,9 @@ function Main() {
             ? colorError
             : isDragActive
             ? colorDrag
-            : isProcessing || isDone
+            : isProcessing
+            ? colorProcessing
+            : isDone
             ? colorDone
             : colorStart;
         const opacity = translucent ? "EE" : "FF";

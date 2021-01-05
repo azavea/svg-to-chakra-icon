@@ -11,6 +11,7 @@ import { pulseAnimation } from "../constants";
 const sx = {
     outputItem: {
         position: "relative",
+        transition: "opacity 150ms",
     },
     preview: {
         flex: "none",
@@ -18,11 +19,9 @@ const sx = {
     },
     icon: {
         fontSize: "8rem",
-        opacity: 0.6,
     },
     iconHighlight: {
         color: "highlight",
-        opacity: 0.4,
     },
     code: {
         flex: "auto",
@@ -31,7 +30,6 @@ const sx = {
         overflowX: "auto",
         fontFamily: "mono",
         whiteSpace: "pre",
-        transition: "opacity 150ms",
     },
     copy: {
         position: "absolute",
@@ -41,16 +39,16 @@ const sx = {
         height: "auto",
         fontSize: "2xl",
         bg: "transparent",
-        color: "white",
-        opacity: 0.8,
+        color: "teal.100",
+        opacity: 0.9,
         transition: "opacity 150ms",
         _hover: {
             opacity: 1,
-            bg: "highlightTint",
+            boxShadow: 1,
         },
         _active: {
             bg: "highlight",
-            color: "highlightTint",
+            color: "black",
         },
         _disabled: {
             opacity: 0,
@@ -121,8 +119,16 @@ function OutputItem({
     };
 
     return (
-        <Flex {...sx.outputItem} opacity={disabled ? 0.3 : 1} {...props}>
-            <Center {...sx.preview} bg={optimized ? "white" : "transparent"}>
+        <Flex
+            {...sx.outputItem}
+            opacity={disabled ? 0.11 : 1}
+            sx={disabled ? { backdropFilter: "" } : {}}
+            {...props}
+        >
+            <Center
+                {...sx.preview}
+                bg={optimized ? "#00000005" : "transparent"}
+            >
                 {optimized && (
                     <Box
                         dangerouslySetInnerHTML={{ __html: optimized }}

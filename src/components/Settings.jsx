@@ -58,6 +58,7 @@ function SettingToggle({
         >
             <Switch
                 {...sx.switch}
+                colorScheme="teal"
                 id={name}
                 isChecked={isChecked}
                 onChange={({ target }) => onChange({ [name]: target.checked })}
