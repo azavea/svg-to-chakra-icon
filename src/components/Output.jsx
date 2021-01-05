@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Flex, Button, IconButton, Icon } from "@chakra-ui/react";
-import { FaCopy } from "react-icons/fa";
+import { IconCopy } from "../img/icons";
 
 import Logo from "./Logo";
 import FormatPicker from "./FormatPicker";
@@ -56,7 +56,7 @@ const sx = {
         border: "3px solid",
         borderColor: "highlight",
         _hover: {
-            color: "#FFFFFF",
+            color: "white",
             boxShadow: 1,
         },
         _active: {
@@ -154,7 +154,7 @@ function Output({ files, onReset, ...props }) {
                     onBlur={handleBlur}
                     aria-label="Copy Chakra code for all icons"
                 >
-                    <Icon {...sx.icon} as={FaCopy} /> Copy all
+                    <Icon {...sx.icon} as={IconCopy} /> Copy all
                 </Button>
             </Flex>
             <Settings

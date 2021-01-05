@@ -126,8 +126,8 @@ function Main() {
         <Status
             isDragging={isDragActive}
             isProcessing={isProcessing}
-            canAppend={isDone}
-            shouldAppend={shouldAppend}
+            canReplace={isDone}
+            shouldAppend={!isDone || shouldAppend}
             numIcons={draggedFiles.length}
             error={error}
         />

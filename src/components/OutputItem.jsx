@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { Flex, Box, Center, IconButton, Icon } from "@chakra-ui/react";
 import Highlight, { defaultProps } from "prism-react-renderer";
 import vsDark from "prism-react-renderer/themes/vsDark";
-import { FaCopy } from "react-icons/fa";
 
 import useClipboard from "../utils/useClipboard";
 import { composeIconCode } from "../utils/chakra";
+import { IconCopy } from "../img/icons";
 import { pulseAnimation } from "../constants";
 
 const sx = {
@@ -39,16 +39,17 @@ const sx = {
         height: "auto",
         fontSize: "2xl",
         bg: "transparent",
-        color: "teal.100",
-        opacity: 0.9,
+        color: "highlightTint",
         transition: "opacity 150ms",
         _hover: {
-            opacity: 1,
+            color: "white",
+            bg: "highlight",
             boxShadow: 1,
         },
         _active: {
+            color: "teal.800",
             bg: "highlight",
-            color: "black",
+            boxShadow: 0,
         },
         _disabled: {
             opacity: 0,
@@ -59,12 +60,14 @@ const sx = {
                 boxShadow: "none",
             },
             ".js-focus-visible &.focus-visible": {
-                color: "highlight",
-                opacity: 1,
+                color: "highlightTint",
+                bg: "highlight",
+                boxShadow: 1,
             },
             ".js-focus-visible &.focus-visible:active": {
-                bg: "highlight",
-                color: "highlightTint",
+                bg: "highlightTint",
+                color: "highlight",
+                boxShadow: 0,
             },
         },
     },
@@ -171,7 +174,7 @@ function OutputItem({
             <IconButton
                 {...sx.copy}
                 {...(doHighlight ? sx.copyHighlight : {})}
-                icon={<Icon as={FaCopy} />}
+                icon={<Icon as={IconCopy} />}
                 size="lg"
                 disabled={disabled}
                 onClick={handleClick}

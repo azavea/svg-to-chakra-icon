@@ -1,8 +1,7 @@
 import { Flex, Text, Icon } from "@chakra-ui/react";
 import { useShowtime } from "react-showtime";
-import { FiUploadCloud } from "react-icons/fi";
-import { GiParachute } from "react-icons/gi";
-import { FaRegFrownOpen } from "react-icons/fa";
+
+import { IconUpload, IconDropAdd, IconError, IconDropNew } from "../img/icons";
 
 import { pulseAnimation } from "../constants";
 
@@ -33,7 +32,7 @@ const sx = {
 function Status({
     isDragging,
     isProcessing,
-    canAppend,
+    canReplace,
     shouldAppend,
     numIcons = 0,
     error,
@@ -48,7 +47,7 @@ function Status({
     const composeMessage = () => {
         if (error) return error;
         if (isDragging) {
-            if (canAppend) {
+            if (canReplace) {
                 if (shouldAppend) return "Drop to append";
                 return "Drop to replace all icons";
             }
@@ -71,16 +70,18 @@ function Status({
             <Icon
                 as={
                     error
-                        ? FaRegFrownOpen
-                        : isDragging || isProcessing
-                        ? GiParachute
-                        : FiUploadCloud
+                        ? IconError
+                        : isDragging && shouldAppend
+                        ? IconDropAdd
+                        : isDragging
+                        ? IconDropNew
+                        : IconUpload
                 }
                 {...sx.icon}
                 opacity={isProcessing ? 0 : isDragging ? 1 : 0.8}
             />
             <Text {...sx.message}>{composeMessage()}</Text>
-            {canAppend && isDragging && (
+            {canReplace && isDragging && (
                 <Text {...sx.append}>
                     {shouldAppend
                         ? "Hold SHIFT to replace"
