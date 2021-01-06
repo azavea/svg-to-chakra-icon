@@ -1,7 +1,14 @@
 {
     "name": "svg-to-chakra-icon",
     "version": "0.1.0",
+    "description": "Website for converting SVG files into Chakra UI Icon components",
+    "author": "Scott Lederer",
+    "license": "Apache-2.0",
     "private": true,
+    "repository": "azavea/svg-to-chakra-icon",
+    "bugs": {
+        "url": "https://github.com/azavea/svg-to-chakra-icon/issues"
+    },
     "dependencies": {
         "@chakra-ui/react": "^1.0.4",
         "@emotion/react": "^11.1.2",
