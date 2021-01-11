@@ -9,6 +9,9 @@ const sx = {
     status: {
         direction: "column",
         align: "center",
+        border: "8px dashed",
+        borderRadius: "0.8rem",
+        p: 6,
     },
     icon: {
         mb: 2,
@@ -63,6 +66,7 @@ function Status({
         <Flex
             ref={ref}
             {...sx.status}
+            borderColor={shouldPulse ? "transparent" : "#E1EAEF"}
             animation={shouldPulse ? pulseAnimation : null}
             color={error ? "red.900" : isDragging ? "teal.800" : "teal.600"}
             {...props}
