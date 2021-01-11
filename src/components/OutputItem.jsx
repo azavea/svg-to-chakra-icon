@@ -5,7 +5,7 @@ import vsDark from "prism-react-renderer/themes/vsDark";
 
 import useClipboard from "../utils/useClipboard";
 import { composeIconCode } from "../utils/chakra";
-import { IconCopy } from "../img/icons";
+import { IconCopy } from "./Icons";
 import { pulseAnimation } from "../constants";
 
 const sx = {

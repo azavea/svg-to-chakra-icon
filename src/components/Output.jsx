@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Flex, Button, IconButton, Icon } from "@chakra-ui/react";
-import { IconCopy } from "../img/icons";
+import { IconCopy } from "./Icons";
 
 import Logo from "./Logo";
 import FormatPicker from "./FormatPicker";

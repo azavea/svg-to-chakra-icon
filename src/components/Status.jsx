@@ -1,7 +1,7 @@
 import { Flex, Text, Icon } from "@chakra-ui/react";
 import { useShowtime } from "react-showtime";
 
-import { IconUpload, IconDropAdd, IconError, IconDropNew } from "../img/icons";
+import { IconUpload, IconDropAdd, IconError, IconDropNew } from "./Icons";
 
 import { pulseAnimation } from "../constants";
 
