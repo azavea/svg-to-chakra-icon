@@ -81,7 +81,6 @@ const plugins = [
     // removeViewBox,   // a default we don't want
     removeXMLProcInst,
     sortDefsChildren,
-    collapseGroups, // moved near end bc groups need some cleaning to be eligible for collapsing
     // NON-DEFAULTS...
     {
         ...removeAttrs,
@@ -108,6 +107,8 @@ const plugins = [
         },
     },
     { ...sortAttrs, active: true },
+    // DEFAULT but moved to end bc groups need some cleaning to become eligible for collapse
+    collapseGroups,
 ];
 
 const svgo = new SVGO({ plugins });
